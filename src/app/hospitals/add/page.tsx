@@ -1,24 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import BottomNav from '@/components/BottomNav';
-import L from 'leaflet';
-import { Marker } from 'react-leaflet';
+import type { DivIcon } from 'leaflet';
 
 const MapWrapper = dynamic(() => import('@/components/MapWrapper'), { ssr: false });
-
-const centerPin = L.divIcon({
-  className: 'custom-leaflet-icon',
-  html: `<div class="relative flex items-center justify-center w-8 h-8">
-          <div class="absolute w-6 h-6 bg-primary rounded-full opacity-30 animate-ping"></div>
-          <div class="relative w-4 h-4 bg-primary rounded-full border-2 border-white shadow-md"></div>
-          <div class="absolute top-4 w-0.5 h-4 bg-primary"></div>
-         </div>`,
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-});
+const Marker = dynamic(() => import('react-leaflet').then(({ Marker }) => Marker), { ssr: false });
 
 const FACILITY_TYPES = [
   'Hospital',
@@ -28,6 +17,7 @@ const FACILITY_TYPES = [
 ];
 
 export default function AddFacilityPage() {
+  const [centerPin, setCenterPin] = useState<DivIcon | null>(null);
   const [name, setName] = useState('');
   const [facilityType, setFacilityType] = useState('Hospital');
   const [address, setAddress] = useState('');
@@ -41,6 +31,21 @@ export default function AddFacilityPage() {
   });
 
   const center: [number, number] = [28.6469, 77.3164];
+
+  useEffect(() => {
+    import('leaflet').then(({ default: L }) => {
+      setCenterPin(L.divIcon({
+        className: 'custom-leaflet-icon',
+        html: `<div class="relative flex items-center justify-center w-8 h-8">
+                <div class="absolute w-6 h-6 bg-primary rounded-full opacity-30 animate-ping"></div>
+                <div class="relative w-4 h-4 bg-primary rounded-full border-2 border-white shadow-md"></div>
+                <div class="absolute top-4 w-0.5 h-4 bg-primary"></div>
+               </div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+      }));
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-surface font-[var(--font-inter)] flex flex-col pb-24">
@@ -107,7 +112,7 @@ export default function AddFacilityPage() {
           
           <div className="rounded-2xl overflow-hidden border border-outline-variant/50 relative shadow-sm h-44">
             <MapWrapper center={center} zoom={15}>
-               <Marker position={center} icon={centerPin} />
+              {centerPin && <Marker position={center} icon={centerPin} />}
             </MapWrapper>
             
             {/* Crosshair target overlay */}
