@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-background": "#181c1e", "on-secondary-container": "#5a646f", "surface-container-lowest": "#ffffff", "aqi-very-poor": "#B23B3B", "mist": "#E7EAEC", "aqi-good": "#3A8564", "on-tertiary-fixed-variant": "#005237", "primary-fixed": "#cee5ff", "aqi-poor": "#CC7A2E", "outline-variant": "#c3c7cd", "aqi-satisfactory": "#8FA83C", "aqi-moderate": "#D3A130", "inverse-primary": "#aec9e7", "error": "#A6403A", "on-secondary-fixed": "#131d26", "on-secondary-fixed-variant": "#3e4852", "slate": "#5B6570", "card-white": "#FFFFFF", "on-error": "#ffffff", "surface-container-highest": "#e0e3e5", "on-primary-fixed": "#001d33", "tertiary-fixed": "#a6f3cb", "secondary-fixed-dim": "#bdc7d4", "surface-container": "#ebeef0", "unverified": "#8A8578", "inverse-on-surface": "#eef1f3", "secondary-fixed": "#d9e3f0", "surface-bright": "#f7fafc", "inverse-surface": "#2d3133", "on-primary-fixed-variant": "#2f4962", "surface-dim": "#d7dadc", "tertiary-container": "#003824", "secondary-container": "#d6e1ee", "error-container": "#ffdad6", "on-error-container": "#93000a", "sky-paper": "#F4F7F9", "on-tertiary-container": "#5ca683", "on-primary-container": "#809ab7", "tertiary": "#002013", "ink": "#12161A", "surface-container-low": "#f1f4f6", "background": "#f7fafc", "on-surface-variant": "#43474d", "on-tertiary-fixed": "#002114", "on-surface": "#181c1e", "surface-variant": "#e0e3e5", "surface-container-high": "#e5e9eb", "outline": "#73777e", "secondary": "#555f6a", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#8ad6b0", "primary-container": "#16324a", "on-secondary": "#ffffff", "primary": "#001d33", "on-primary": "#ffffff", "primary-fixed-dim": "#aec9e7", "surface": "#f7fafc", "aqi-severe": "#5C2A44", "estimate-flag": "#B8860B", "surface-tint": "#47617b" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-3xl": "3rem", "space-md": "0.75rem", "gutter": "1rem", "gutter-tablet": "1.25rem", "margin": "1.25rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "space-xl": "1.5rem", "space-sm": "0.5rem", "gutter-desktop": "1.5rem", "space-lg": "1rem", "space-2xl": "2rem" }, fontFamily: { "cost-hero-mobile": ["Space Grotesk"], "title-md": ["Inter"], "label-chrome": ["Inter"], "display-hero-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "display-hero": ["Space Grotesk"], "body-md": ["Inter"], "label-md": ["Inter"], "headline-md": ["Space Grotesk"], "caption": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "cost-hero": ["Space Grotesk"] }, fontSize: { "cost-hero-mobile": ["32px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }], "title-md": ["16px", { lineHeight: "24px", fontWeight: "600" }], "label-chrome": ["11px", { lineHeight: "14px", fontWeight: "500" }], "display-hero-mobile": ["56px", { lineHeight: "60px", letterSpacing: "-0.02em", fontWeight: "600" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "500" }], "display-hero": ["72px", { lineHeight: "76px", letterSpacing: "-0.02em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "22px", fontWeight: "400" }], "label-md": ["13px", { lineHeight: "18px", fontWeight: "500" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "500" }], "caption": ["12px", { lineHeight: "16px", fontWeight: "400" }], "label-lg": ["15px", { lineHeight: "20px", fontWeight: "500" }], "body-lg": ["15px", { lineHeight: "24px", fontWeight: "400" }], "cost-hero": ["40px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { width: 100vw; margin: 0; padding: 0; } body { overscroll-behavior: none; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; } .liquid-glass { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.90), 0 8px 32px rgba(18, 22, 26, 0.08); }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-sky-paper text-ink flex flex-col min-h-screen selection:bg-secondary-container"><main class="flex flex-col relative w-full pb-safe bg-sky-paper min-h-screen pt-safe"><div class="flex flex-col w-full px-margin pb-24 space-y-space-lg">
+<!-- Title & Context Area -->
+<div class="pt-space-md space-y-space-xs">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-secondary-container text-primary">
+<span class="material-symbols-outlined text-[16px]">calculate</span>
+</span>
+<span class="font-label-chrome text-label-chrome text-secondary uppercase tracking-wider">Health Economics Engine</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Personal Cost Calculator</h2>
+<p class="font-body-md text-body-md text-slate">Translate ambient air exposure into expected annual out-of-pocket medical expenditure.</p>
+</div>
+<!-- Estimate Modelled Banner Component -->
+<div class="rounded-xl bg-estimate-flag/5 p-space-md flex items-start gap-space-sm shadow-sm" style="box-shadow: inset 0 0 0 1px rgba(184, 134, 11, 0.2);">
+<span class="material-symbols-outlined text-estimate-flag text-[20px] shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">insights</span>
+<p class="font-caption text-caption text-ink leading-relaxed">
+<span class="font-medium text-ink">Modelled research estimate:</span> Correlates epidemiological baseline data with micro-level municipal air records. Not intended as direct medical diagnosis or insurance underwriting advice.
+    </p>
+</div>
+<!-- Interactive Form Inputs Section -->
+<div class="space-y-space-md">
+<!-- Input Group 1: Current Local AQI Card -->
+<div class="bg-card-white rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md transition-all duration-200">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-primary font-medium flex items-center gap-1.5" for="aqi-input">
+<span class="">Current Local AQI</span>
+<span class="material-symbols-outlined text-secondary text-[16px]" title="CPB Realtime Air Quality Index">help_outline</span>
+</label>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container font-label-chrome text-label-chrome text-slate">
+<span class="w-1.5 h-1.5 rounded-full bg-aqi-poor animate-pulse"></span> Live Sensor
+        </span>
+</div>
+<div class="flex items-center justify-between gap-space-md bg-surface-container-low p-space-md rounded-lg">
+<div class="flex items-baseline gap-space-sm">
+<span class="font-cost-hero-mobile text-cost-hero-mobile text-primary tracking-tight" id="aqi-val-display">248</span>
+<span class="font-caption text-caption text-slate">AQI / PM2.5</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 rounded-full text-white font-label-md text-label-md bg-aqi-poor font-medium shadow-sm transition-colors duration-300" id="aqi-badge">
+            Poor
+          </span>
+<button aria-label="Adjust AQI value" class="w-9 h-9 rounded-full bg-card-white flex items-center justify-center text-primary shadow-sm active:scale-95 transition-transform" id="adjust-aqi-toggle" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Expandable slider for quick manual override -->
+<div class="hidden pt-1 pb-1 space-y-2" id="aqi-slider-panel">
+<div class="flex justify-between font-caption text-caption text-secondary">
+<span class="">Manual Air Index Override</span>
+<span class="font-medium text-ink" id="aqi-slider-readout">248 AQI</span>
+</div>
+<input class="w-full accent-primary-container h-2 bg-mist rounded-lg appearance-none cursor-pointer" id="aqi-range" max="480" min="30" type="range" value="248">
+</div>
+<p class="font-caption text-caption text-secondary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-slate">location_on</span>
+        Auto-filled from Anand Vihar, Delhi station. Tap tune icon to alter.
+      </p>
+</div>
+<!-- Input Group 2: Annual Exposure Days (Range Slider) -->
+<div class="bg-card-white rounded-xl p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-start justify-between">
+<div class="space-y-0.5">
+<label class="font-label-lg text-label-lg text-primary font-medium block" for="exposure-slider">
+            Annual High-Risk Exposure Days
+          </label>
+<span class="font-caption text-caption text-secondary">Days exposed to Poor, Very Poor, or Severe air</span>
+</div>
+<div class="text-right">
+<span class="font-cost-hero-mobile text-cost-hero-mobile text-primary tracking-tight" id="days-display">140</span>
+<span class="block font-label-chrome text-label-chrome text-slate">days / year</span>
+</div>
+</div>
+<!-- Slider Track Container -->
+<div class="space-y-2 pt-1">
+<div class="relative flex items-center">
+<input aria-label="Exposure days per year" class="w-full accent-primary-container h-2.5 bg-mist rounded-full appearance-none cursor-pointer transition-all" id="exposure-slider" max="300" min="10" step="5" type="range" value="140">
+</div>
+<div class="flex justify-between font-label-chrome text-label-chrome text-secondary px-0.5">
+<span class="">10d (Coastal)</span>
+<span class="">150d (Gangetic Plains avg)</span>
+<span class="">300d (NCR Epicenter)</span>
+</div>
+</div>
+<!-- Contextual Impact Pill -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-secondary-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[16px]">chronic</span>
+</div>
+<p class="font-caption text-caption text-slate leading-tight">
+          Exceeds WHO 24h clean-air threshold by <strong class="font-medium text-ink">9.3×</strong> across selected duration.
+        </p>
+</div>
+</div>
+<!-- Input Group 3: Baseline Annual Spend (Optional Currency Input) -->
+<div class="bg-card-white rounded-xl p-space-lg shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-primary font-medium" for="spend-input">
+          Household Annual Health Spend
+        </label>
+<span class="font-label-chrome text-label-chrome text-secondary px-2 py-0.5 rounded bg-surface-container">Optional</span>
+</div>
+<div class="relative flex items-center mt-1">
+<span class="absolute left-3.5 font-cost-hero-mobile text-cost-hero-mobile text-slate select-none pointer-events-none">₹</span>
+<input class="w-full bg-card-white pl-10 pr-4 py-3 rounded-xl font-headline-md text-headline-md text-ink placeholder:text-outline-variant bg-surface-container-lowest shadow-[0_1px_2px_rgba(18,22,26,0.06)] focus:outline-none focus:ring-2 focus:ring-primary-container/20 transition-all" id="spend-input" inputmode="numeric" placeholder="18,500" type="text" value="18,500">
+</div>
+<div class="flex items-center justify-between pt-0.5">
+<p class="font-caption text-caption text-secondary">
+          India urban household median: <span class="font-medium text-slate">₹15,000–₹25,000</span>
+</p>
+<button class="font-caption text-caption text-primary hover:underline" onclick="document.getElementById('spend-input').value='21,000'; calculateLive();" type="button">Reset median</button>
+</div>
+</div>
+<!-- Input Group 4: Vulnerability Susceptibility Switch -->
+<div class="bg-card-white rounded-xl p-space-lg shadow-sm space-y-space-sm">
+<div class="flex items-start justify-between gap-space-md">
+<div class="space-y-1 pr-2">
+<div class="flex items-center gap-1.5">
+<label class="font-label-lg text-label-lg text-primary font-medium cursor-pointer" for="vulnerable-toggle">
+              Vulnerable Household Cohort
+            </label>
+<span class="inline-flex items-center px-2 py-0.2 rounded-full font-label-chrome text-label-chrome bg-tertiary-fixed text-on-tertiary-fixed-variant font-medium">
+              1.65× Curve
+            </span>
+</div>
+<p class="font-caption text-caption text-slate">
+            Children under 10, seniors (60+), or diagnosed asthma / COPD bronchial history.
+          </p>
+</div>
+<!-- Accessible iOS-style toggle switch -->
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+<input checked="" class="sr-only peer" id="vulnerable-toggle" type="checkbox">
+<div class="w-12 h-7 bg-mist peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary-container shadow-inner"></div>
+</label>
+</div>
+<div class="pt-space-xs flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px] text-slate">verified</span>
+<span class="font-caption text-caption text-secondary">
+          Weighted with ICMR (Indian Council of Medical Research) respiratory morbidity models.
+        </span>
+</div>
+</div>
+<!-- Realtime Projection Preview Pill Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-card-white shadow-sm flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+</div>
+<div>
+<span class="block font-label-chrome text-label-chrome text-secondary">Projected Incremental Burden</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight" id="burden-preview">+₹23,519 / yr</span>
+</div>
+</div>
+<span class="font-caption text-caption text-aqi-poor font-medium bg-aqi-poor/10 px-2.5 py-1 rounded-full">+67% Med Spend</span>
+</div>
+</div>
+<!-- Persistent Bottom Glass Action Zone (within normal page flow container) -->
+<div class="pt-space-sm">
+<button class="w-full h-12 bg-primary-container text-white rounded-xl font-label-lg text-label-lg font-medium flex items-center justify-center gap-2 shadow-md hover:bg-primary transition-all active:scale-[0.99]" id="submit-calc-btn" type="button">
+<span class="">Calculate Estimated Impact</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<p class="font-caption text-caption text-center text-slate mt-2">
+      Instant projection includes clinical visits, inhalers, purifiers, and lost productivity.
+    </p>
+</div>
+</div>
+<script>
+  (function initCalculator() {
+    const slider = document.getElementById('exposure-slider');
+    const daysDisplay = document.getElementById('days-display');
+    const toggle = document.getElementById('vulnerable-toggle');
+    const spendInput = document.getElementById('spend-input');
+    const burdenPreview = document.getElementById('burden-preview');
+    const aqiSliderPanel = document.getElementById('aqi-slider-panel');
+    const adjustAqiToggle = document.getElementById('adjust-aqi-toggle');
+    const aqiRange = document.getElementById('aqi-range');
+    const aqiValDisplay = document.getElementById('aqi-val-display');
+    const aqiSliderReadout = document.getElementById('aqi-slider-readout');
+    const aqiBadge = document.getElementById('aqi-badge');
+
+    function getAqiCategory(val) {
+      if (val <= 50) return { label: 'Good', color: 'bg-aqi-good' };
+      if (val <= 100) return { label: 'Satisfactory', color: 'bg-aqi-satisfactory' };
+      if (val <= 200) return { label: 'Moderate', color: 'bg-aqi-moderate' };
+      if (val <= 300) return { label: 'Poor', color: 'bg-aqi-poor' };
+      if (val <= 400) return { label: 'Very Poor', color: 'bg-aqi-very-poor' };
+      return { label: 'Severe', color: 'bg-aqi-severe' };
+    }
+
+    function calculateLive() {
+      const days = parseInt(slider.value, 10);
+      const isVulnerable = toggle.checked;
+      const rawSpend = parseInt(spendInput.value.replace(/[^0-9]/g, ''), 10) || 18500;
+      const currentAqi = parseInt(aqiRange.value, 10);
+
+      // Epidemiological multiplier approximation
+      const aqiFactor = (currentAqi / 100) * 0.45;
+      const dayFactor = (days / 365) * 1.8;
+      const vulnMultiplier = isVulnerable ? 1.65 : 1.0;
+
+      const incremental = Math.round(rawSpend * aqiFactor * dayFactor * vulnMultiplier);
+      const formatted = new Intl.NumberFormat('en-IN').format(incremental);
+      burdenPreview.textContent = '+₹' + formatted + ' / yr';
+    }
+
+    // Slider listener
+    slider.addEventListener('input', (e) => {
+      daysDisplay.textContent = e.target.value;
+      calculateLive();
+    });
+
+    // Vulnerability listener
+    toggle.addEventListener('change', calculateLive);
+
+    // Baseline spend input formatting
+    spendInput.addEventListener('input', (e) => {
+      let numeric = e.target.value.replace(/[^0-9]/g, '');
+      if (numeric) {
+        e.target.value = new Intl.NumberFormat('en-IN').format(parseInt(numeric, 10));
+      }
+      calculateLive();
+    });
+
+    // Expand manual AQI tuner
+    adjustAqiToggle.addEventListener('click', () => {
+      aqiSliderPanel.classList.toggle('hidden');
+    });
+
+    // AQI override slider
+    aqiRange.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      aqiValDisplay.textContent = val;
+      aqiSliderReadout.textContent = val + ' AQI';
+      const cat = getAqiCategory(val);
+      aqiBadge.textContent = cat.label;
+      aqiBadge.className = 'px-3 py-1 rounded-full text-white font-label-md text-label-md font-medium shadow-sm transition-colors duration-300 ' + cat.color;
+      calculateLive();
+    });
+
+    // Button micro-interaction
+    const submitBtn = document.getElementById('submit-calc-btn');
+    submitBtn.addEventListener('click', () => {
+      submitBtn.classList.add('scale-95');
+      setTimeout(() => submitBtn.classList.remove('scale-95'), 120);
+    });
+
+    // Initial sync
+    calculateLive();
+  })();
+</script></main>
+
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe pointer-events-none"><div class="mx-auto max-w-md md:max-w-2xl px-margin pb-3 pointer-events-auto"><div class="liquid-glass rounded-full px-4 py-2 flex items-center justify-around shadow-lg"><a href="#" class="flex flex-col items-center justify-center gap-0.5 text-secondary hover:text-primary active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-chrome text-label-chrome">Home</span></a><a href="#" class="flex flex-col items-center justify-center gap-0.5 text-secondary hover:text-primary active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">map</span><span class="font-label-chrome text-label-chrome">Heatmaps</span></a><a href="#" class="flex flex-col items-center justify-center gap-0.5 text-secondary hover:text-primary active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">local_hospital</span><span class="font-label-chrome text-label-chrome">Hospitals</span></a><a href="#" class="flex flex-col items-center justify-center gap-0.5 text-secondary hover:text-primary active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">info</span><span class="font-label-chrome text-label-chrome">About</span></a><a href="#" class="flex flex-col items-center justify-center gap-0.5 text-primary active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">person</span><span class="font-label-chrome text-label-chrome font-medium">Profile</span></a></div></div></nav></body></html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-background": "#181c1e", "on-secondary-container": "#5a646f", "surface-container-lowest": "#ffffff", "aqi-very-poor": "#B23B3B", "mist": "#E7EAEC", "aqi-good": "#3A8564", "on-tertiary-fixed-variant": "#005237", "primary-fixed": "#cee5ff", "aqi-poor": "#CC7A2E", "outline-variant": "#c3c7cd", "aqi-satisfactory": "#8FA83C", "aqi-moderate": "#D3A130", "inverse-primary": "#aec9e7", "error": "#A6403A", "on-secondary-fixed": "#131d26", "on-secondary-fixed-variant": "#3e4852", "slate": "#5B6570", "card-white": "#FFFFFF", "on-error": "#ffffff", "surface-container-highest": "#e0e3e5", "on-primary-fixed": "#001d33", "tertiary-fixed": "#a6f3cb", "secondary-fixed-dim": "#bdc7d4", "surface-container": "#ebeef0", "unverified": "#8A8578", "inverse-on-surface": "#eef1f3", "secondary-fixed": "#d9e3f0", "surface-bright": "#f7fafc", "inverse-surface": "#2d3133", "on-primary-fixed-variant": "#2f4962", "surface-dim": "#d7dadc", "tertiary-container": "#003824", "secondary-container": "#d6e1ee", "error-container": "#ffdad6", "on-error-container": "#93000a", "sky-paper": "#F4F7F9", "on-tertiary-container": "#5ca683", "on-primary-container": "#809ab7", "tertiary": "#002013", "ink": "#12161A", "surface-container-low": "#f1f4f6", "background": "#f7fafc", "on-surface-variant": "#43474d", "on-tertiary-fixed": "#002114", "on-surface": "#181c1e", "surface-variant": "#e0e3e5", "surface-container-high": "#e5e9eb", "outline": "#73777e", "secondary": "#555f6a", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#8ad6b0", "primary-container": "#16324a", "on-secondary": "#ffffff", "primary": "#001d33", "on-primary": "#ffffff", "primary-fixed-dim": "#aec9e7", "surface": "#f7fafc", "aqi-severe": "#5C2A44", "estimate-flag": "#B8860B", "surface-tint": "#47617b" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-3xl": "3rem", "space-md": "0.75rem", "gutter": "1rem", "gutter-tablet": "1.25rem", "margin": "1.25rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "space-xl": "1.5rem", "space-sm": "0.5rem", "gutter-desktop": "1.5rem", "space-lg": "1rem", "space-2xl": "2rem" }, fontFamily: { "cost-hero-mobile": ["Space Grotesk"], "title-md": ["Inter"], "label-chrome": ["Inter"], "display-hero-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "display-hero": ["Space Grotesk"], "body-md": ["Inter"], "label-md": ["Inter"], "headline-md": ["Space Grotesk"], "caption": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "cost-hero": ["Space Grotesk"] }, fontSize: { "cost-hero-mobile": ["32px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }], "title-md": ["16px", { lineHeight: "24px", fontWeight: "600" }], "label-chrome": ["11px", { lineHeight: "14px", fontWeight: "500" }], "display-hero-mobile": ["56px", { lineHeight: "60px", letterSpacing: "-0.02em", fontWeight: "600" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "500" }], "display-hero": ["72px", { lineHeight: "76px", letterSpacing: "-0.02em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "22px", fontWeight: "400" }], "label-md": ["13px", { lineHeight: "18px", fontWeight: "500" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "500" }], "caption": ["12px", { lineHeight: "16px", fontWeight: "400" }], "label-lg": ["15px", { lineHeight: "20px", fontWeight: "500" }], "body-lg": ["15px", { lineHeight: "24px", fontWeight: "400" }], "cost-hero": ["40px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { width: 100vw; margin: 0; padding: 0; } body { overscroll-behavior: none; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; } .liquid-glass { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.90), 0 8px 32px rgba(18, 22, 26, 0.08); }</style></head><body class="bg-sky-paper text-ink flex flex-col min-h-screen selection:bg-secondary-container"><main class="flex flex-col relative w-full pb-safe bg-sky-paper min-h-screen pt-space-md"><div class="flex flex-col w-full pb-28 select-none">
+<!-- Segmented Control Glass Header -->
+<div class="px-margin pt-space-md sticky z-30 top-0">
+<div class="liquid-glass p-1.5 rounded-full flex items-center justify-between shadow-sm">
+<button class="flex-1 py-2 px-space-md rounded-full text-center font-label-md text-label-md transition-all duration-300 bg-primary-container text-card-white shadow-sm flex items-center justify-center gap-1.5" id="tab-aqi" onclick="switchMode('aqi')">
+<span class="material-symbols-outlined text-[16px]">air</span>
+<span class="">AQI Heatmap</span>
+</button>
+<button class="flex-1 py-2 px-space-md rounded-full text-center font-label-md text-label-md transition-all duration-300 text-secondary hover:text-ink flex items-center justify-center gap-1.5" id="tab-cost" onclick="switchMode('cost')">
+<span class="material-symbols-outlined text-[16px]">currency_rupee</span>
+<span class="">Healthcare Cost Risk</span>
+</button>
+</div>
+</div>
+<!-- Contextual Telemetry Banner -->
+<div class="px-margin mt-space-md">
+<div class="bg-surface-container-high rounded-xl p-space-sm flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-aqi-good opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-aqi-good"></span>
+</span>
+<p class="font-caption text-caption text-secondary line-clamp-1" id="banner-text">
+          Live telemetry: 384 CPCB &amp; State nodes. Gangetic Corridor active.
+        </p>
+</div>
+<button class="px-2 py-0.5 rounded-full bg-surface-container-lowest text-primary text-[10px] font-label-md uppercase tracking-wider whitespace-nowrap shadow-sm" onclick="toggleSensorDetails()">
+        Details
+      </button>
+</div>
+</div>
+<!-- Interactive Map Canvas Container -->
+<div class="px-margin mt-space-md relative">
+<div class="relative w-full h-[380px] rounded-2xl overflow-hidden bg-slate/10 shadow-md">
+<!-- Static Vector Map Canvas with dynamic gradient simulation -->
+<div class="w-full h-full bg-cover bg-center" data-location="Indo Gangetic Plains, New Delhi, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAHjNfJJIwhYigCrw__JOCoXeMoAgz-2A0K3Hm5DKHoenuMQmzxtLVOrQy3xaAHjPqQ3_xX5J0ejj_b1iUUwnd9zYoopq8575jIQIsyzWl_qeu3peXMkSHDRHhEo1rM_j0V9DM5cHBpBZyA0VllqTXyYy2xYMv7WqTYyKsU2mImRRWVaYrzNAASZ1JRRGuWkbf09RFDsE9Vl8npUMH15gTA1-IvE8_L0cY4PEYHkAvIiefvMjnxCvbjEg')">
+<!-- Overlay for atmospheric plume / cost density interpolation -->
+<div class="absolute inset-0 transition-opacity duration-700 pointer-events-none opacity-85" id="heatmap-overlay" style="background: radial-gradient(circle at 45% 35%, rgba(92, 42, 68, 0.72) 0%, rgba(178, 59, 59, 0.65) 28%, rgba(204, 122, 46, 0.5) 50%, rgba(58, 133, 100, 0.15) 75%, transparent 100%);"></div>
+<!-- Wind Streamlines SVG Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-60" id="wind-vectors" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="wind-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"></stop>
+<stop offset="50%" stop-color="#ffffff" stop-opacity="0.6"></stop>
+<stop offset="100%" stop-color="#ffffff" stop-opacity="0.1"></stop>
+</linearGradient>
+</defs>
+<path class="animate-pulse" d="M 20 140 Q 140 120 220 170 T 360 190" fill="none" stroke="url(#wind-grad)" stroke-dasharray="6 8" stroke-width="2"></path>
+<path d="M 40 220 Q 180 180 270 230 T 400 250" fill="none" stroke="url(#wind-grad)" stroke-dasharray="4 6" stroke-width="1.5"></path>
+<path d="M 80 80 Q 200 90 280 130 T 380 160" fill="none" stroke="url(#wind-grad)" stroke-dasharray="5 7" stroke-width="1.5"></path>
+</svg>
+<!-- Dynamic City Data Tags on Map -->
+<!-- Delhi -->
+<div class="absolute top-[28%] left-[28%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer" onclick="highlightCity('Delhi', 248, '₹3,850/mo')">
+<div class="relative flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card-white/95 backdrop-blur-md shadow-md hover:scale-105 transition-transform">
+<span class="w-2.5 h-2.5 rounded-full bg-aqi-poor"></span>
+<span class="font-headline-md text-[13px] text-ink">Delhi</span>
+<span class="font-headline-md text-[12px] font-semibold text-aqi-poor" id="delhi-val">248</span>
+</div>
+<div class="w-1.5 h-1.5 bg-card-white rounded-full mx-auto mt-0.5 shadow-sm"></div>
+</div>
+<!-- Lucknow -->
+<div class="absolute top-[40%] left-[55%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer" onclick="highlightCity('Lucknow', 215, '₹3,100/mo')">
+<div class="relative flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card-white/95 backdrop-blur-md shadow-md hover:scale-105 transition-transform">
+<span class="w-2.5 h-2.5 rounded-full bg-aqi-poor"></span>
+<span class="font-headline-md text-[13px] text-ink">Lucknow</span>
+<span class="font-headline-md text-[12px] font-semibold text-aqi-poor" id="lko-val">215</span>
+</div>
+<div class="w-1.5 h-1.5 bg-card-white rounded-full mx-auto mt-0.5 shadow-sm"></div>
+</div>
+<!-- Patna -->
+<div class="absolute top-[48%] left-[78%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer" onclick="highlightCity('Patna', 340, '₹4,600/mo')">
+<div class="relative flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card-white/95 backdrop-blur-md shadow-md ring-2 ring-aqi-very-poor/30 hover:scale-105 transition-transform">
+<span class="w-2.5 h-2.5 rounded-full bg-aqi-very-poor animate-ping absolute"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-aqi-very-poor"></span>
+<span class="font-headline-md text-[13px] text-ink">Patna</span>
+<span class="font-headline-md text-[12px] font-semibold text-aqi-very-poor" id="patna-val">340</span>
+</div>
+<div class="w-1.5 h-1.5 bg-card-white rounded-full mx-auto mt-0.5 shadow-sm"></div>
+</div>
+<!-- Kolkata -->
+<div class="absolute top-[72%] left-[84%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer" onclick="highlightCity('Kolkata', 162, '₹2,250/mo')">
+<div class="relative flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card-white/95 backdrop-blur-md shadow-md hover:scale-105 transition-transform">
+<span class="w-2.5 h-2.5 rounded-full bg-aqi-moderate"></span>
+<span class="font-headline-md text-[13px] text-ink">Kolkata</span>
+<span class="font-headline-md text-[12px] font-semibold text-aqi-moderate" id="kol-val">162</span>
+</div>
+<div class="w-1.5 h-1.5 bg-card-white rounded-full mx-auto mt-0.5 shadow-sm"></div>
+</div>
+<!-- Mumbai -->
+<div class="absolute top-[78%] left-[22%] -translate-x-1/2 -translate-y-1/2 group cursor-pointer" onclick="highlightCity('Mumbai', 92, '₹1,150/mo')">
+<div class="relative flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card-white/95 backdrop-blur-md shadow-md hover:scale-105 transition-transform">
+<span class="w-2.5 h-2.5 rounded-full bg-aqi-satisfactory"></span>
+<span class="font-headline-md text-[13px] text-ink">Mumbai</span>
+<span class="font-headline-md text-[12px] font-semibold text-aqi-satisfactory" id="mum-val">92</span>
+</div>
+<div class="w-1.5 h-1.5 bg-card-white rounded-full mx-auto mt-0.5 shadow-sm"></div>
+</div>
+</div>
+<!-- Floating Map Overlays (Top Right Controls) -->
+<div class="absolute top-3 right-3 flex flex-col gap-2 z-10">
+<!-- Layer Selector Button -->
+<div class="relative">
+<button class="liquid-glass w-9 h-9 rounded-full flex items-center justify-center text-primary shadow-md active:scale-95 transition-transform" id="layer-btn" onclick="toggleLayerMenu()">
+<span class="material-symbols-outlined text-[19px]">layers</span>
+</button>
+<!-- Layer Dropdown Menu -->
+<div class="hidden absolute right-0 mt-1.5 w-44 rounded-xl liquid-glass p-2 shadow-xl flex flex-col gap-1 z-20" id="layer-menu">
+<button class="w-full text-left px-2 py-1.5 rounded-lg text-[12px] font-label-md flex items-center justify-between text-ink hover:bg-white/60" onclick="selectLayer('wind')">
+<span class="">Wind vectors</span>
+<span class="material-symbols-outlined text-[16px] text-primary" id="check-wind">check</span>
+</button>
+<button class="w-full text-left px-2 py-1.5 rounded-lg text-[12px] font-label-md flex items-center justify-between text-ink hover:bg-white/60" onclick="selectLayer('nodes')">
+<span class="">Sensor nodes</span>
+<span class="material-symbols-outlined text-[16px] text-primary hidden" id="check-nodes">check</span>
+</button>
+<button class="w-full text-left px-2 py-1.5 rounded-lg text-[12px] font-label-md flex items-center justify-between text-ink hover:bg-white/60" onclick="selectLayer('satellite')">
+<span class="">Satellite AOD</span>
+<span class="material-symbols-outlined text-[16px] text-primary hidden" id="check-sat">check</span>
+</button>
+</div>
+</div>
+<!-- Zoom Controls -->
+<div class="liquid-glass rounded-full flex flex-col shadow-md overflow-hidden">
+<button class="w-9 h-9 flex items-center justify-center text-ink hover:bg-white/40 active:scale-95 transition-all" onclick="mapZoom(1)">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<div class="h-[1px] bg-mist/60 w-full"></div>
+<button class="w-9 h-9 flex items-center justify-center text-ink hover:bg-white/40 active:scale-95 transition-all" onclick="mapZoom(-1)">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+</div>
+<!-- Recenter Action -->
+<button class="liquid-glass w-9 h-9 rounded-full flex items-center justify-center text-ink shadow-md active:scale-95 transition-transform" onclick="recenterMap()">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+</div>
+<!-- Live Corridor Stamp Badge (Bottom Left of Map) -->
+<div class="absolute bottom-3 left-3 z-10">
+<div class="liquid-glass px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">explore</span>
+<span class="font-caption text-caption text-ink font-medium" id="map-subhead">Gangetic Basin Focus</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dynamic Spectrum Legend Bar -->
+<div class="px-margin mt-space-md">
+<div class="bg-card-white p-space-sm rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-center text-[11px] font-label-chrome text-secondary">
+<span id="legend-min" class="">0 (Good)</span>
+<span id="legend-mid" class="">Moderate (101-200)</span>
+<span id="legend-max" class="">Severe (401-500+)</span>
+</div>
+<!-- Color Spectrum Gradient Bar matching CPCB bands -->
+<div class="w-full h-2.5 rounded-full" id="spectrum-bar" style="background: linear-gradient(to right, #3A8564 0%, #8FA83C 20%, #D3A130 40%, #CC7A2E 60%, #B23B3B 80%, #5C2A44 100%);"></div>
+<div class="grid grid-cols-6 text-center text-[10px] font-caption text-secondary">
+<span class="">0-50</span>
+<span class="">51-100</span>
+<span class="">101-200</span>
+<span class="">201-300</span>
+<span class="">301-400</span>
+<span class="">401+</span>
+</div>
+</div>
+</div>
+<!-- Regional Insight & Economic Burden Card -->
+<div class="px-margin mt-space-md">
+<div class="bg-card-white rounded-xl p-space-lg shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-ink">Indo-Gangetic Airshed</h3>
+<p class="font-caption text-caption text-secondary">Winter Thermal Inversion Zone</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-[11px]">High Risk</span>
+</div>
+<p class="font-body-md text-body-md text-slate" id="airshed-desc">
+        Trapped particulate matter spans a continuous 1,200 km belt from Punjab through Bihar. Estimated regional out-of-pocket respiratory expenditure accelerates by <strong class="text-ink font-semibold">+48%</strong> above standard national baseline.
+      </p>
+<!-- Key Correlated Risk Metrics Grid -->
+<div class="grid grid-cols-2 gap-space-sm pt-2">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-caption text-caption text-secondary">Projected Avg Burden</span>
+<span class="font-cost-hero-mobile text-cost-hero-mobile text-primary" id="burden-stat">₹3,420<span class="text-[13px] font-normal text-secondary">/mo</span></span>
+<span class="font-caption text-caption text-aqi-poor mt-0.5">Nebulizers &amp; Inhalers</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-caption text-caption text-secondary">Airshed Population</span>
+<span class="font-cost-hero-mobile text-cost-hero-mobile text-primary">284<span class="text-[13px] font-normal text-secondary">M</span></span>
+<span class="font-caption text-caption text-error mt-0.5">Persistent Exposure</span>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full mt-2 py-2.5 rounded-xl bg-primary-container text-card-white font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-sm" onclick="exploreMicroClinics()">
+<span class="material-symbols-outlined text-[18px]">local_hospital</span>
+<span class="">View Regional Clinic Corridors</span>
+</button>
+</div>
+</div>
+<!-- Sensor Node Density Bottom Sheet Trigger info (Collapsible) -->
+<div class="hidden px-margin mt-space-md" id="sensor-drawer">
+<div class="bg-surface-container-high rounded-xl p-space-md flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<h4 class="font-headline-md text-[15px] text-ink">CPCB Station Calibration</h4>
+<button class="text-secondary hover:text-ink" onclick="toggleSensorDetails()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-caption text-caption text-slate">
+        Hourly BAM-1020 &amp; EDM-180 beta attenuation readings synced with 12 CPCB regional telemetry servers. 98.4% uptime in Gangetic Plains sensor array.
+      </p>
+</div>
+</div>
+<!-- Persistent Floating Liquid Glass Tab Bar -->
+<nav class="fixed bottom-3 inset-x-margin max-w-md md:max-w-2xl mx-auto z-40">
+<div class="liquid-glass rounded-full h-14 px-4 flex items-center justify-around shadow-xl"><a class="flex flex-col items-center justify-center text-secondary hover:text-ink transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span class="font-label-chrome text-label-chrome mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center text-primary-container relative" href="#"><span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">map</span><span class="font-label-chrome text-label-chrome font-semibold mt-0.5">Heatmaps</span><div class="w-1 h-1 bg-primary-container rounded-full absolute -bottom-1"></div></a><a class="flex flex-col items-center justify-center text-secondary hover:text-ink transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">local_hospital</span><span class="font-label-chrome text-label-chrome mt-0.5">Hospitals</span></a><a class="flex flex-col items-center justify-center text-secondary hover:text-ink transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">info</span><span class="font-label-chrome text-label-chrome mt-0.5">About</span></a><a class="flex flex-col items-center justify-center text-secondary hover:text-ink transition-colors" href="#"><span class="material-symbols-outlined text-[20px]">person</span><span class="font-label-chrome text-label-chrome mt-0.5">Profile</span></a></div>
+</nav>
+<!-- Interactive Logic -->
+<script>
+    let currentMode = 'aqi';
+    let windVisible = true;
+
+    function switchMode(mode) {
+      currentMode = mode;
+      const tabAqi = document.getElementById('tab-aqi');
+      const tabCost = document.getElementById('tab-cost');
+      const overlay = document.getElementById('heatmap-overlay');
+      const bannerText = document.getElementById('banner-text');
+      const spectrum = document.getElementById('spectrum-bar');
+      const minLbl = document.getElementById('legend-min');
+      const midLbl = document.getElementById('legend-mid');
+      const maxLbl = document.getElementById('legend-max');
+      const desc = document.getElementById('airshed-desc');
+      const burden = document.getElementById('burden-stat');
+
+      // Tag elements
+      const dVal = document.getElementById('delhi-val');
+      const lVal = document.getElementById('lko-val');
+      const pVal = document.getElementById('patna-val');
+      const kVal = document.getElementById('kol-val');
+      const mVal = document.getElementById('mum-val');
+
+      if (mode === 'cost') {
+        tabCost.className = 'flex-1 py-2 px-space-md rounded-full text-center font-label-md text-label-md transition-all duration-300 bg-primary-container text-card-white shadow-sm flex items-center justify-center gap-1.5';
+        tabAqi.className = 'flex-1 py-2 px-space-md rounded-full text-center font-label-md text-label-md transition-all duration-300 text-secondary hover:text-ink flex items-center justify-center gap-1.5';
+
+        // Shift heatmap visualization to Health Cost Burden
+        overlay.style.background = 'radial-gradient(circle at 45% 35%, rgba(166, 64, 58, 0.75) 0%, rgba(204, 122, 46, 0.6) 30%, rgba(211, 161, 48, 0.45) 55%, rgba(58, 133, 100, 0.2) 80%, transparent 100%)';
+
+        bannerText.textContent = 'Modelled health expenditures derived from ICMR respiratory clinical datasets.';
+        
+        spectrum.style.background = 'linear-gradient(to right, #3A8564 0%, #D3A130 40%, #CC7A2E 70%, #A6403A 100%)';
+        minLbl.textContent = '₹500/mo (Low)';
+        midLbl.textContent = '₹2,500/mo (Elevated)';
+        maxLbl.textContent = '₹5,000+/mo (Acute)';
+
+        desc.innerHTML = 'Modelled healthcare cost pressure reflects direct medication, doctor consults, and work productivity loss. Gangetic belt households incur <strong class="text-ink font-semibold">₹38,000+</strong> annual out-of-pocket load.';
+        burden.innerHTML = '₹4,180<span class="text-[13px] font-normal text-secondary">/mo</span>';
+
+        dVal.textContent = '₹3.8k';
+        lVal.textContent = '₹3.1k';
+        pVal.textContent = '₹4.6k';
+        kVal.textContent = '₹2.2k';
+        mVal.textContent = '₹1.1k';
+      } else {
+        tabAqi.className = 'flex-1 py-2 px-space-md rounded-full text-center font-label-md text-label-md transition-all duration-300 bg-primary-container text-card-white shadow-sm flex items-center justify-center gap-1.5';
+        tabCost.className = 'flex-1 py-2 px-space-md rounded-full text-center font-label-md text-label-md transition-all duration-300 text-secondary hover:text-ink flex items-center justify-center gap-1.5';
+
+        overlay.style.background = 'radial-gradient(circle at 45% 35%, rgba(92, 42, 68, 0.72) 0%, rgba(178, 59, 59, 0.65) 28%, rgba(204, 122, 46, 0.5) 50%, rgba(58, 133, 100, 0.15) 75%, transparent 100%)';
+
+        bannerText.textContent = 'Live continuous telemetry from CPCB & state monitoring stations across India.';
+
+        spectrum.style.background = 'linear-gradient(to right, #3A8564 0%, #8FA83C 20%, #D3A130 40%, #CC7A2E 60%, #B23B3B 80%, #5C2A44 100%)';
+        minLbl.textContent = '0 (Good)';
+        midLbl.textContent = 'Moderate (101-200)';
+        maxLbl.textContent = 'Severe (401-500+)';
+
+        desc.innerHTML = 'Trapped particulate matter spans a continuous 1,200 km belt from Punjab through Bihar. Estimated regional out-of-pocket respiratory expenditure accelerates by <strong class="text-ink font-semibold">+48%</strong> above standard national baseline.';
+        burden.innerHTML = '₹3,420<span class="text-[13px] font-normal text-secondary">/mo</span>';
+
+        dVal.textContent = '248';
+        lVal.textContent = '215';
+        pVal.textContent = '340';
+        kVal.textContent = '162';
+        mVal.textContent = '92';
+      }
+    }
+
+    function toggleLayerMenu() {
+      const menu = document.getElementById('layer-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function selectLayer(type) {
+      document.getElementById('check-wind').classList.add('hidden');
+      document.getElementById('check-nodes').classList.add('hidden');
+      document.getElementById('check-sat').classList.add('hidden');
+
+      const vectors = document.getElementById('wind-vectors');
+      if (type === 'wind') {
+        document.getElementById('check-wind').classList.remove('hidden');
+        vectors.style.display = 'block';
+      } else if (type === 'nodes') {
+        document.getElementById('check-nodes').classList.remove('hidden');
+        vectors.style.display = 'none';
+      } else {
+        document.getElementById('check-sat').classList.remove('hidden');
+        vectors.style.display = 'block';
+      }
+      toggleLayerMenu();
+    }
+
+    function mapZoom(delta) {
+      const overlay = document.getElementById('heatmap-overlay');
+      overlay.style.transform = delta > 0 ? 'scale(1.08)' : 'scale(1)';
+      overlay.style.transition = 'transform 0.4s ease';
+    }
+
+    function recenterMap() {
+      const overlay = document.getElementById('heatmap-overlay');
+      overlay.style.transform = 'scale(1)';
+    }
+
+    function highlightCity(name, aqi, cost) {
+      const desc = document.getElementById('airshed-desc');
+      if (currentMode === 'aqi') {
+        desc.innerHTML = `Focused node: <strong class="text-ink font-semibold">${name}</strong> reporting real-time AQI <strong class="text-aqi-poor">${aqi}</strong>. Prevailing North-Westerly wind pushes drift plumes downstream toward Bihar.`;
+      } else {
+        desc.innerHTML = `Focused node: <strong class="text-ink font-semibold">${name}</strong> estimated household burden: <strong class="text-primary font-semibold">${cost}</strong> in prophylactic &amp; acute treatment costs.`;
+      }
+    }
+
+    function toggleSensorDetails() {
+      const drawer = document.getElementById('sensor-drawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    function exploreMicroClinics() {
+      const desc = document.getElementById('airshed-desc');
+      desc.innerHTML = 'Connecting to National Health Mission registry... Found 312 certified pulmonology care points in current heatmap viewport.';
+    }
+  </script>
+</div></main>
+
+
+
+</body></html>

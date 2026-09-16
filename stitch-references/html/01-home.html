@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-background": "#181c1e", "on-secondary-container": "#5a646f", "surface-container-lowest": "#ffffff", "aqi-very-poor": "#B23B3B", "mist": "#E7EAEC", "aqi-good": "#3A8564", "on-tertiary-fixed-variant": "#005237", "primary-fixed": "#cee5ff", "aqi-poor": "#CC7A2E", "outline-variant": "#c3c7cd", "aqi-satisfactory": "#8FA83C", "aqi-moderate": "#D3A130", "inverse-primary": "#aec9e7", "error": "#A6403A", "on-secondary-fixed": "#131d26", "on-secondary-fixed-variant": "#3e4852", "slate": "#5B6570", "card-white": "#FFFFFF", "on-error": "#ffffff", "surface-container-highest": "#e0e3e5", "on-primary-fixed": "#001d33", "tertiary-fixed": "#a6f3cb", "secondary-fixed-dim": "#bdc7d4", "surface-container": "#ebeef0", "unverified": "#8A8578", "inverse-on-surface": "#eef1f3", "secondary-fixed": "#d9e3f0", "surface-bright": "#f7fafc", "inverse-surface": "#2d3133", "on-primary-fixed-variant": "#2f4962", "surface-dim": "#d7dadc", "tertiary-container": "#003824", "secondary-container": "#d6e1ee", "error-container": "#ffdad6", "on-error-container": "#93000a", "sky-paper": "#F4F7F9", "on-tertiary-container": "#5ca683", "on-primary-container": "#809ab7", "tertiary": "#002013", "ink": "#12161A", "surface-container-low": "#f1f4f6", "background": "#f7fafc", "on-surface-variant": "#43474d", "on-tertiary-fixed": "#002114", "on-surface": "#181c1e", "surface-variant": "#e0e3e5", "surface-container-high": "#e5e9eb", "outline": "#73777e", "secondary": "#555f6a", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#8ad6b0", "primary-container": "#16324a", "on-secondary": "#ffffff", "primary": "#001d33", "on-primary": "#ffffff", "primary-fixed-dim": "#aec9e7", "surface": "#f7fafc", "aqi-severe": "#5C2A44", "estimate-flag": "#B8860B", "surface-tint": "#47617b" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-3xl": "3rem", "space-md": "0.75rem", "gutter": "1rem", "gutter-tablet": "1.25rem", "margin": "1.25rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "space-xl": "1.5rem", "space-sm": "0.5rem", "gutter-desktop": "1.5rem", "space-lg": "1rem", "space-2xl": "2rem" }, fontFamily: { "cost-hero-mobile": ["Space Grotesk"], "title-md": ["Inter"], "label-chrome": ["Inter"], "display-hero-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "display-hero": ["Space Grotesk"], "body-md": ["Inter"], "label-md": ["Inter"], "headline-md": ["Space Grotesk"], "caption": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "cost-hero": ["Space Grotesk"] }, fontSize: { "cost-hero-mobile": ["32px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }], "title-md": ["16px", { lineHeight: "24px", fontWeight: "600" }], "label-chrome": ["11px", { lineHeight: "14px", fontWeight: "500" }], "display-hero-mobile": ["56px", { lineHeight: "60px", letterSpacing: "-0.02em", fontWeight: "600" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "500" }], "display-hero": ["72px", { lineHeight: "76px", letterSpacing: "-0.02em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "22px", fontWeight: "400" }], "label-md": ["13px", { lineHeight: "18px", fontWeight: "500" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "500" }], "caption": ["12px", { lineHeight: "16px", fontWeight: "400" }], "label-lg": ["15px", { lineHeight: "20px", fontWeight: "500" }], "body-lg": ["15px", { lineHeight: "24px", fontWeight: "400" }], "cost-hero": ["40px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { width: 100vw; margin: 0; padding: 0; } body { overscroll-behavior: none; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; } .liquid-glass { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.90), 0 8px 32px rgba(18, 22, 26, 0.08); }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-sky-paper text-ink flex flex-col min-h-screen selection:bg-secondary-container"><main class="flex flex-col relative w-full pb-28 bg-sky-paper min-h-screen pt-safe pt-space-md"><div class="flex flex-col w-full px-margin pb-space-2xl max-w-md md:max-w-2xl mx-auto">
+<!-- Location Selector & Telemetry Station Header -->
+<div class="flex items-center justify-between py-space-sm">
+<div class="flex flex-col">
+<button class="group flex items-center gap-1.5 text-left active:opacity-75 transition-opacity" type="button">
+<span class="font-headline-md text-headline-md text-primary tracking-tight font-semibold flex items-center gap-1">
+          Anand Vihar, New Delhi
+          <span class="material-symbols-outlined text-[18px] text-slate group-hover:text-primary transition-colors">expand_more</span>
+</span>
+</button>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="inline-flex items-center gap-1 font-caption text-caption text-slate">
+<span class="w-1.5 h-1.5 rounded-full bg-aqi-poor animate-pulse"></span>
+          Live station: CPCB DPCC
+        </span>
+<span class="text-mist font-caption text-caption">•</span>
+<span class="font-caption text-caption text-secondary">Updated 12m ago</span>
+</div>
+</div>
+<button aria-label="Refresh live telemetry" class="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-primary active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+</div>
+<!-- Hero Signature Component: AQI Radial Dial / Ring -->
+<div class="my-space-xl flex flex-col items-center justify-center relative">
+  <div class="relative w-72 h-72 flex items-center justify-center">
+    <!-- High Precision Radial Meter SVG with track arc and calibrated tick ring -->
+    <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 260 260">
+      <defs>
+        <linearGradient id="aqiDialGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#D3A130"></stop>
+          <stop offset="50%" stop-color="#CC7A2E"></stop>
+          <stop offset="100%" stop-color="#B23B3B"></stop>
+        </linearGradient>
+      </defs>
+      <!-- Background track arc (open arc from 135 deg to 405 deg = 270 deg span) -->
+      <circle cx="130" cy="130" r="104" fill="none" stroke="#E7EAEC" stroke-width="12" stroke-linecap="round" stroke-dasharray="489.84" stroke-dashoffset="163.28"></circle>
+      <!-- Active Progress Arc: 248 on 0-500 scale is 49.6% of 489.84 = ~243 offset -->
+      <circle id="aqi-meter-ring" cx="130" cy="130" r="104" fill="none" stroke="#CC7A2E" stroke-width="12" stroke-linecap="round" stroke-dasharray="489.84" stroke-dashoffset="246.8" class="transition-all duration-1000 ease-out"></circle>
+      <!-- Gauge tick marks at CPCB thresholds (0, 50, 100, 200, 300, 400, 500) -->
+      <!-- Subtle decorative inner perimeter track -->
+      <circle cx="130" cy="130" r="90" fill="none" stroke="#F1F4F6" stroke-width="1.5" stroke-dasharray="4 6"></circle>
+    </svg>
+
+    <!-- Center Telemetry Display -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center select-none pt-2">
+      <span class="font-display-hero-mobile text-display-hero-mobile text-primary tracking-tight font-semibold leading-none drop-shadow-sm" style="font-variant-numeric: tabular-nums; letter-spacing: -0.03em;">248</span>
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-aqi-poor/10 border border-aqi-poor/20 mt-2">
+        <span class="w-2 h-2 rounded-full bg-aqi-poor animate-pulse"></span>
+        <span class="font-label-md text-label-md text-aqi-poor font-semibold tracking-wide uppercase">Poor (201–300)</span>
+      </div>
+      <div class="mt-2 px-2.5 py-0.5 rounded-full bg-sky-paper/90 border border-slate/10">
+        <span class="font-caption text-caption text-slate font-medium">
+          Dominant: <span class="text-ink font-semibold">PM2.5 (182 µg/m³)</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gauge Subtext Telemetry Badges Strip -->
+  <div class="flex items-center gap-space-sm mt-3">
+    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white shadow-sm border border-slate/10 font-label-chrome text-label-chrome text-slate transition-all hover:shadow">
+      <span class="material-symbols-outlined text-[16px] text-aqi-poor">thermostat</span>
+      <span class="font-medium text-ink">28°C</span>
+    </span>
+    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white shadow-sm border border-slate/10 font-label-chrome text-label-chrome text-slate transition-all hover:shadow">
+      <span class="material-symbols-outlined text-[16px] text-primary">water_drop</span>
+      <span class="font-medium text-ink">62% RH</span>
+    </span>
+    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white shadow-sm border border-slate/10 font-label-chrome text-label-chrome text-slate transition-all hover:shadow">
+      <span class="material-symbols-outlined text-[16px] text-slate">air</span>
+      <span class="font-medium text-ink">4.8 km/h NW</span>
+    </span>
+  </div>
+</div>
+<!-- Health Impact Plain-Language Card -->
+<div class="rounded-xl bg-aqi-poor/10 p-space-lg mb-space-lg shadow-sm">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-aqi-poor flex-shrink-0 flex items-center justify-center text-white mt-0.5">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-primary font-semibold">Advisory for Current Zone</span>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+          Breathing discomfort on prolonged exposure for most people. Sensitive groups should wear N95 masks and avoid morning exertion.
+        </p>
+</div>
+</div>
+</div>
+<!-- 24-Hour Forecast Bar Strip -->
+<div class="bg-card-white rounded-xl p-space-lg shadow-sm mb-space-lg border border-slate/10">
+  <!-- Header with title, indicator and model source -->
+  <div class="flex items-center justify-between mb-space-md">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-[20px] text-primary">schedule</span>
+      <span class="font-title-md text-title-md text-primary font-semibold">24-Hour AQI Trend &amp; Forecast</span>
+    </div>
+    <span class="font-caption text-caption text-slate font-medium px-2 py-0.5 rounded bg-sky-paper border border-slate/10">Hourly CPCB Model</span>
+  </div>
+
+  <!-- Reference benchmark legend -->
+  <div class="flex items-center justify-between text-caption font-caption text-slate pb-2 border-b border-mist/80 mb-3">
+    <span class="flex items-center gap-1">
+      <span class="w-2 h-0.5 bg-slate/40 inline-block"></span> CPCB Poor Threshold (200)
+    </span>
+    <span class="text-secondary font-medium">Continuous Telemetry</span>
+  </div>
+
+  <!-- Hourly Forecast Timeline Grid with Visual Scale Line -->
+  <div class="relative pt-2 pb-1">
+    <!-- Subtle horizontal threshold reference line at ~200 AQI mark -->
+    <div class="absolute left-0 right-0 top-[46px] border-b border-dashed border-slate/25 pointer-events-none z-0"></div>
+
+    <div class="grid grid-cols-7 gap-2 relative z-10">
+      <!-- 6 AM: 210 Poor -->
+      <div class="flex flex-col items-center group">
+        <span class="font-caption text-caption text-secondary font-medium mb-1.5 transition-colors group-hover:text-primary">210</span>
+        <div class="w-full h-20 bg-sky-paper rounded-lg flex items-end p-1 border border-mist">
+          <div class="w-full bg-aqi-poor rounded transition-all duration-300 group-hover:brightness-95" style="height: 56%;"></div>
+        </div>
+        <span class="font-label-chrome text-label-chrome text-slate mt-2">6 AM</span>
+      </div>
+
+      <!-- Now: 248 Poor (Active Highlighted Item) -->
+      <div class="flex flex-col items-center relative group">
+        <div class="absolute -top-3 px-1.5 py-0.2 rounded-full bg-primary text-white text-[10px] font-bold shadow-sm ring-2 ring-white flex items-center gap-0.5">
+          <span class="w-1 h-1 rounded-full bg-aqi-poor animate-ping"></span>
+          <span class="">Live</span>
+        </div>
+        <span class="font-caption text-caption text-primary font-bold mb-1.5 mt-1">248</span>
+        <div class="w-full h-20 bg-primary/5 rounded-lg flex items-end p-1 shadow-inner border-2 border-primary/30 ring-2 ring-primary/10">
+          <div class="w-full bg-aqi-poor rounded shadow-sm" style="height: 68%;"></div>
+        </div>
+        <span class="font-label-chrome text-label-chrome text-primary font-bold mt-2">Now</span>
+      </div>
+
+      <!-- 12 PM: 180 Moderate -->
+      <div class="flex flex-col items-center group">
+        <span class="font-caption text-caption text-secondary font-medium mb-1.5 transition-colors group-hover:text-primary">180</span>
+        <div class="w-full h-20 bg-sky-paper rounded-lg flex items-end p-1 border border-mist">
+          <div class="w-full bg-aqi-moderate rounded transition-all duration-300 group-hover:brightness-95" style="height: 46%;"></div>
+        </div>
+        <span class="font-label-chrome text-label-chrome text-slate mt-2">12 PM</span>
+      </div>
+
+      <!-- 3 PM: 165 Moderate -->
+      <div class="flex flex-col items-center group">
+        <span class="font-caption text-caption text-secondary font-medium mb-1.5 transition-colors group-hover:text-primary">165</span>
+        <div class="w-full h-20 bg-sky-paper rounded-lg flex items-end p-1 border border-mist">
+          <div class="w-full bg-aqi-moderate rounded transition-all duration-300 group-hover:brightness-95" style="height: 42%;"></div>
+        </div>
+        <span class="font-label-chrome text-label-chrome text-slate mt-2">3 PM</span>
+      </div>
+
+      <!-- 6 PM: 230 Poor -->
+      <div class="flex flex-col items-center group">
+        <span class="font-caption text-caption text-secondary font-medium mb-1.5 transition-colors group-hover:text-primary">230</span>
+        <div class="w-full h-20 bg-sky-paper rounded-lg flex items-end p-1 border border-mist">
+          <div class="w-full bg-aqi-poor rounded transition-all duration-300 group-hover:brightness-95" style="height: 62%;"></div>
+        </div>
+        <span class="font-label-chrome text-label-chrome text-slate mt-2">6 PM</span>
+      </div>
+
+      <!-- 9 PM: 290 Poor -->
+      <div class="flex flex-col items-center group">
+        <span class="font-caption text-caption text-secondary font-medium mb-1.5 transition-colors group-hover:text-primary">290</span>
+        <div class="w-full h-20 bg-sky-paper rounded-lg flex items-end p-1 border border-mist">
+          <div class="w-full bg-aqi-poor rounded transition-all duration-300 group-hover:brightness-95" style="height: 78%;"></div>
+        </div>
+        <span class="font-label-chrome text-label-chrome text-slate mt-2">9 PM</span>
+      </div>
+
+      <!-- 12 AM: 320 Very Poor -->
+      <div class="flex flex-col items-center group">
+        <span class="font-caption text-caption text-aqi-very-poor font-bold mb-1.5 transition-colors">320</span>
+        <div class="w-full h-20 bg-sky-paper rounded-lg flex items-end p-1 border border-mist">
+          <div class="w-full bg-aqi-very-poor rounded transition-all duration-300 group-hover:brightness-95" style="height: 90%;"></div>
+        </div>
+        <span class="font-label-chrome text-label-chrome text-slate mt-2">12 AM</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Ambient Air Pollutant Breakdown Grid -->
+<div class="mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-title-md text-title-md text-primary font-semibold">Key Pollutants</span>
+<span class="font-caption text-caption text-slate">Standard µg/m³</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- PM10 -->
+<div class="bg-card-white rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-slate font-medium">PM10</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold mt-0.5">290</span>
+<span class="font-label-chrome text-label-chrome text-aqi-poor">Above Limit</span>
+</div>
+<div class="w-3 h-3 rounded-full bg-aqi-poor"></div>
+</div>
+<!-- NO2 -->
+<div class="bg-card-white rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-slate font-medium">NO2</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold mt-0.5">48</span>
+<span class="font-label-chrome text-label-chrome text-aqi-good">Permissible</span>
+</div>
+<div class="w-3 h-3 rounded-full bg-aqi-good"></div>
+</div>
+<!-- SO2 -->
+<div class="bg-card-white rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-slate font-medium">SO2</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold mt-0.5">14</span>
+<span class="font-label-chrome text-label-chrome text-aqi-good">Optimal</span>
+</div>
+<div class="w-3 h-3 rounded-full bg-aqi-good"></div>
+</div>
+<!-- CO -->
+<div class="bg-card-white rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-caption text-caption text-slate font-medium">CO (mg/m³)</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold mt-0.5">1.2</span>
+<span class="font-label-chrome text-label-chrome text-aqi-good">Safe</span>
+</div>
+<div class="w-3 h-3 rounded-full bg-aqi-good"></div>
+</div>
+</div>
+</div>
+<!-- Large Tappable Feature Action Cards -->
+<div class="flex flex-col gap-space-md mb-space-lg">
+<!-- Card A: Healthcare Cost Impact -->
+<a class="bg-card-white rounded-xl p-space-lg shadow-sm hover:shadow-md active:scale-[0.99] transition-all flex items-center justify-between group" href="#">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-white flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]">cardiology</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-primary font-semibold truncate">Healthcare Cost Impact</span>
+<span class="px-1.5 py-0.5 rounded bg-mist text-slate font-caption text-caption font-medium">Lancet GBD</span>
+</div>
+<p class="font-body-md text-body-md text-secondary mt-0.5 line-clamp-2">
+            Estimated annual outpatient &amp; medication load backed by Lancet GBD data
+          </p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-slate group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-2">chevron_right</span>
+</a>
+<!-- Card B: Nearby Health Facilities -->
+<a class="bg-card-white rounded-xl p-space-lg shadow-sm hover:shadow-md active:scale-[0.99] transition-all flex items-center justify-between group" href="#">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-white flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]">local_hospital</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-primary font-semibold truncate">Nearby Health Facilities</span>
+<p class="font-body-md text-body-md text-secondary mt-0.5 line-clamp-2">
+            14 Hospitals &amp; Government PHCs within 5 km
+          </p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-slate group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-2">chevron_right</span>
+</a>
+</div>
+<!-- Community Micro-Delight Tip Card -->
+<div class="bg-card-white rounded-xl p-space-md shadow-sm flex items-center gap-3 mb-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary-container flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">filter_vintage</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-label-md text-label-md text-primary font-semibold">Indoor Air Tip</span>
+<span class="font-caption text-caption text-secondary truncate">Seal windward windows during peak vehicular traffic (8–11 AM).</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    // Highlight 'Home' navigation tab in app shell
+    const homeTab = document.querySelector('nav a[data-path="home"]');
+    if (homeTab) {
+      homeTab.classList.remove('text-slate');
+      homeTab.classList.add('text-primary-container', 'font-semibold');
+      const icon = homeTab.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.style.fontVariationSettings = "'FILL' 1";
+      }
+      const pill = homeTab.querySelector('.active-pill');
+      if (pill) {
+        pill.classList.remove('opacity-0');
+        pill.classList.add('opacity-100');
+      }
+    }
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe pointer-events-none" data-active-classes="text-primary-container font-semibold [&amp;&gt;span.material-symbols-outlined]:fill-1 [&amp;&gt;div.active-pill]:opacity-100"><div class="p-space-sm max-w-md mx-auto pointer-events-auto"><div class="liquid-glass rounded-full px-space-md py-space-xs flex items-center justify-around"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 transition-all relative group text-primary-container font-semibold [&amp;&gt;span.material-symbols-outlined]:fill-1 [&amp;&gt;div.active-pill]:opacity-100" data-path="home" href="#"><span class="material-symbols-outlined text-[22px] transition-transform group-active:scale-90">home</span><span class="font-label-chrome text-label-chrome mt-0.5">Home</span><div class="active-pill opacity-0 w-1 h-1 rounded-full bg-primary-container mt-0.5 transition-opacity"></div></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-slate hover:text-ink transition-all relative group" data-path="heatmaps" href="#"><span class="material-symbols-outlined text-[22px] transition-transform group-active:scale-90">map</span><span class="font-label-chrome text-label-chrome mt-0.5">Heatmaps</span><div class="active-pill opacity-0 w-1 h-1 rounded-full bg-primary-container mt-0.5 transition-opacity"></div></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-slate hover:text-ink transition-all relative group" data-path="hospitals" href="#"><span class="material-symbols-outlined text-[22px] transition-transform group-active:scale-90">local_hospital</span><span class="font-label-chrome text-label-chrome mt-0.5">Hospitals</span><div class="active-pill opacity-0 w-1 h-1 rounded-full bg-primary-container mt-0.5 transition-opacity"></div></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-slate hover:text-ink transition-all relative group" data-path="about" href="#"><span class="material-symbols-outlined text-[22px] transition-transform group-active:scale-90">shield</span><span class="font-label-chrome text-label-chrome mt-0.5">About</span><div class="active-pill opacity-0 w-1 h-1 rounded-full bg-primary-container mt-0.5 transition-opacity"></div></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-slate hover:text-ink transition-all relative group" data-path="profile" href="#"><span class="material-symbols-outlined text-[22px] transition-transform group-active:scale-90">person</span><span class="font-label-chrome text-label-chrome mt-0.5">Profile</span><div class="active-pill opacity-0 w-1 h-1 rounded-full bg-primary-container mt-0.5 transition-opacity"></div></a></div></div></nav>
+
+
+
+</body></html>
