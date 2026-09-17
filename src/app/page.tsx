@@ -1,39 +1,90 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import BottomNav from '@/components/BottomNav';
 import AqiRing from '@/components/AqiRing';
-import { getAqiBand, MOCK_FORECAST, MOCK_POLLUTANTS } from '@/data/constants';
+import { getAqiBand } from '@/data/constants';
+import { useLocationAqi } from '@/hooks/useLocationAqi';
 
 export default function HomePage() {
-  const [currentAqi] = useState(248);
+  const {
+    location,
+    aqi,
+    dominantPollutant,
+    dominantPollutantValue,
+    dominantPollutantUnit,
+    station,
+    minutesAgo,
+    pollutants,
+    forecast,
+    isLoading,
+    error,
+    refetch,
+  } = useLocationAqi();
+
+  const currentAqi = aqi ?? 0;
   const band = getAqiBand(currentAqi);
+
+  // Loading skeleton
+  if (isLoading && !aqi) {
+    return (
+      <>
+        <main className="flex flex-col relative w-full pb-28 bg-sky-paper min-h-screen pt-safe pt-[8px]">
+          <div className="flex flex-col w-full px-[20px] pb-[32px] max-w-md md:max-w-2xl mx-auto">
+            <div className="flex items-center justify-between py-[8px]">
+              <div className="flex flex-col gap-2">
+                <div className="h-7 w-48 bg-slate/10 rounded-lg animate-pulse" />
+                <div className="h-4 w-32 bg-slate/10 rounded-lg animate-pulse" />
+              </div>
+            </div>
+            <div className="my-[24px] flex flex-col items-center justify-center">
+              <div className="w-44 h-44 rounded-full bg-slate/10 animate-pulse" />
+            </div>
+            <div className="h-24 bg-slate/10 rounded-xl animate-pulse mb-4" />
+            <div className="h-48 bg-slate/10 rounded-xl animate-pulse mb-4" />
+          </div>
+        </main>
+        <BottomNav />
+      </>
+    );
+  }
 
   return (
     <>
       <main className="flex flex-col relative w-full pb-28 bg-sky-paper min-h-screen pt-safe pt-[8px]">
         <div className="flex flex-col w-full px-[20px] pb-[32px] max-w-md md:max-w-2xl mx-auto">
 
+          {/* Error banner */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-3 mb-3 flex items-center gap-2">
+              <span className="material-symbols-outlined text-red-500 text-[18px]">error</span>
+              <p className="text-[13px] text-red-700 flex-1">{error}</p>
+              <button onClick={refetch} className="text-red-600 font-medium text-[13px] px-2">Retry</button>
+            </div>
+          )}
+
           {/* Location Selector & Telemetry Station Header */}
           <div className="flex items-center justify-between py-[8px]">
             <div className="flex flex-col">
               <Link href="/search" className="group flex items-center gap-1.5 text-left active:opacity-75 transition-opacity">
                 <span className="font-[var(--font-space-grotesk)] text-[20px] leading-[28px] font-semibold text-primary tracking-tight flex items-center gap-1">
-                  Anand Vihar, New Delhi
+                  {location?.displayName || 'Loading...'}
                   <span className="material-symbols-outlined text-[18px] text-slate group-hover:text-primary transition-colors">expand_more</span>
                 </span>
               </Link>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="inline-flex items-center gap-1 text-[12px] leading-[16px] font-[var(--font-inter)] text-slate">
-                  <span className="w-1.5 h-1.5 rounded-full bg-aqi-poor animate-pulse" />
-                  Live station: CPCB DPCC
+                  <span className={`w-1.5 h-1.5 rounded-full bg-${band.color} animate-pulse`} />
+                  Live station: {station?.name || 'CPCB'}
                 </span>
                 <span className="text-mist text-[12px]">•</span>
-                <span className="text-[12px] leading-[16px] font-[var(--font-inter)] text-secondary">Updated 12m ago</span>
+                <span className="text-[12px] leading-[16px] font-[var(--font-inter)] text-secondary">
+                  {minutesAgo !== null ? (minutesAgo === 0 ? 'Just now' : `Updated ${minutesAgo}m ago`) : ''}
+                </span>
               </div>
             </div>
             <button
+              onClick={refetch}
               aria-label="Refresh live telemetry"
               className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-primary active:scale-95 transition-transform"
             >
@@ -47,7 +98,9 @@ export default function HomePage() {
             {/* Dominant pollutant */}
             <div className="mt-2 px-2.5 py-0.5 rounded-full bg-sky-paper/90 border border-slate/10">
               <span className="text-[12px] leading-[16px] font-[var(--font-inter)] text-slate font-medium">
-                Dominant: <span className="text-ink font-semibold">PM2.5 (182 µg/m³)</span>
+                Dominant: <span className="text-ink font-semibold">
+                  {dominantPollutant || 'PM2.5'} ({dominantPollutantValue ?? '--'} {dominantPollutantUnit || 'µg/m³'})
+                </span>
               </span>
             </div>
 
@@ -67,15 +120,15 @@ export default function HomePage() {
           </div>
 
           {/* Health Impact Card */}
-          <div className="rounded-xl bg-aqi-poor/10 p-[16px] mb-[16px] shadow-sm">
+          <div className={`rounded-xl bg-${band.color}/10 p-[16px] mb-[16px] shadow-sm`}>
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-aqi-poor flex-shrink-0 flex items-center justify-center text-white mt-0.5">
+              <div className={`w-8 h-8 rounded-full bg-${band.color} flex-shrink-0 flex items-center justify-center text-white mt-0.5`}>
                 <span className="material-symbols-outlined text-[18px]">warning</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[15px] leading-[20px] font-semibold font-[var(--font-inter)] text-primary">Advisory for Current Zone</span>
                 <p className="text-[14px] leading-[22px] font-[var(--font-inter)] text-on-surface-variant mt-1 leading-relaxed">
-                  {band.healthImpact} Sensitive groups should wear N95 masks and avoid morning exertion.
+                  {band.healthImpact} {currentAqi > 200 ? 'Sensitive groups should wear N95 masks and avoid morning exertion.' : ''}
                 </p>
               </div>
             </div>
@@ -86,9 +139,9 @@ export default function HomePage() {
             <div className="flex items-center justify-between mb-[12px]">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[20px] text-primary">schedule</span>
-                <span className="text-[16px] leading-[24px] font-semibold font-[var(--font-inter)] text-primary">24-Hour AQI Trend &amp; Forecast</span>
+                <span className="text-[16px] leading-[24px] font-semibold font-[var(--font-inter)] text-primary">AQI Trend &amp; Forecast</span>
               </div>
-              <span className="text-[12px] leading-[16px] font-medium font-[var(--font-inter)] text-slate px-2 py-0.5 rounded bg-sky-paper border border-slate/10">Hourly CPCB Model</span>
+              <span className="text-[12px] leading-[16px] font-medium font-[var(--font-inter)] text-slate px-2 py-0.5 rounded bg-sky-paper border border-slate/10">WAQI Live</span>
             </div>
 
             {/* Reference legend */}
@@ -96,14 +149,14 @@ export default function HomePage() {
               <span className="flex items-center gap-1">
                 <span className="w-2 h-0.5 bg-slate/40 inline-block" /> CPCB Poor Threshold (200)
               </span>
-              <span className="text-secondary font-medium">Continuous Telemetry</span>
+              <span className="text-secondary font-medium">Live Telemetry</span>
             </div>
 
-            {/* Hourly bars */}
+            {/* Hourly/daily bars */}
             <div className="relative pt-2 pb-1">
               <div className="absolute left-0 right-0 top-[46px] border-b border-dashed border-slate/25 pointer-events-none z-0" />
-              <div className="grid grid-cols-7 gap-2 relative z-10">
-                {MOCK_FORECAST.map((item) => {
+              <div className={`grid gap-2 relative z-10`} style={{ gridTemplateColumns: `repeat(${Math.min(forecast.length || 7, 7)}, 1fr)` }}>
+                {(forecast.length > 0 ? forecast : [{ time: '--', aqi: 0 }]).slice(0, 7).map((item) => {
                   const b = getAqiBand(item.aqi);
                   const height = `${Math.min((item.aqi / 400) * 100, 100)}%`;
                   return (
@@ -115,7 +168,7 @@ export default function HomePage() {
                         </div>
                       )}
                       <span className={`text-[12px] leading-[16px] font-medium font-[var(--font-inter)] ${item.isNow ? 'text-primary font-bold mt-1' : 'text-secondary'} mb-1.5`}>
-                        {item.aqi}
+                        {item.aqi || '--'}
                       </span>
                       <div className={`w-full h-20 rounded-lg flex items-end p-1 ${
                         item.isNow
@@ -138,24 +191,26 @@ export default function HomePage() {
           </div>
 
           {/* Key Pollutants Grid */}
-          <div className="mb-[16px]">
-            <div className="flex items-center justify-between mb-[8px]">
-              <span className="text-[16px] leading-[24px] font-semibold font-[var(--font-inter)] text-primary">Key Pollutants</span>
-              <span className="text-[12px] leading-[16px] font-[var(--font-inter)] text-slate">Standard µg/m³</span>
-            </div>
-            <div className="grid grid-cols-2 gap-[8px]">
-              {MOCK_POLLUTANTS.slice(0, 4).map((p) => (
-                <div key={p.name} className="bg-card-white rounded-xl p-[12px] shadow-sm flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-[12px] leading-[16px] font-[var(--font-inter)] text-slate font-medium">{p.name}{p.unit === 'mg/m³' ? ' (mg/m³)' : ''}</span>
-                    <span className="font-[var(--font-space-grotesk)] text-[20px] leading-[28px] font-semibold text-primary mt-0.5">{p.value}</span>
-                    <span className={`text-[11px] leading-[14px] font-[var(--font-inter)] text-${p.statusColor}`}>{p.status}</span>
+          {pollutants.length > 0 && (
+            <div className="mb-[16px]">
+              <div className="flex items-center justify-between mb-[8px]">
+                <span className="text-[16px] leading-[24px] font-semibold font-[var(--font-inter)] text-primary">Key Pollutants</span>
+                <span className="text-[12px] leading-[16px] font-[var(--font-inter)] text-slate">Standard µg/m³</span>
+              </div>
+              <div className="grid grid-cols-2 gap-[8px]">
+                {pollutants.slice(0, 4).map((p) => (
+                  <div key={p.name} className="bg-card-white rounded-xl p-[12px] shadow-sm flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <span className="text-[12px] leading-[16px] font-[var(--font-inter)] text-slate font-medium">{p.name}{p.unit === 'mg/m³' ? ' (mg/m³)' : ''}</span>
+                      <span className="font-[var(--font-space-grotesk)] text-[20px] leading-[28px] font-semibold text-primary mt-0.5">{p.value}</span>
+                      <span className={`text-[11px] leading-[14px] font-[var(--font-inter)] text-${p.statusColor}`}>{p.status}</span>
+                    </div>
+                    <div className={`w-3 h-3 rounded-full bg-${p.statusColor}`} />
                   </div>
-                  <div className={`w-3 h-3 rounded-full bg-${p.statusColor}`} />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Feature Action Cards */}
           <div className="flex flex-col gap-[12px] mb-[16px]">
@@ -191,7 +246,7 @@ export default function HomePage() {
                 <div className="flex flex-col min-w-0">
                   <span className="text-[16px] leading-[24px] font-semibold font-[var(--font-inter)] text-primary truncate">Nearby Health Facilities</span>
                   <p className="text-[14px] leading-[22px] font-[var(--font-inter)] text-secondary mt-0.5 line-clamp-2">
-                    14 Hospitals &amp; Government PHCs within 5 km
+                    Find hospitals, clinics &amp; PHCs from OpenStreetMap
                   </p>
                 </div>
               </div>

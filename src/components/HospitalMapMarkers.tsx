@@ -2,21 +2,24 @@
 
 import { Marker } from 'react-leaflet';
 import L from 'leaflet';
-import { MOCK_HOSPITALS, Hospital } from '@/data/constants';
+import type { Hospital } from '@/lib/types';
 
 interface HospitalMapMarkersProps {
   center: [number, number];
   onSelect: (hospital: Hospital) => void;
+  hospitals?: Hospital[];
 }
 
 const createIcon = (type: string) => {
   let bgClass = 'bg-primary';
   let borderClass = 'border-white';
 
-  if (type === 'PHC') {
+  if (type === 'phc' || type === 'clinic') {
     bgClass = 'bg-primary border-teal-400 border-2';
-  } else if (type === 'Community') {
+  } else if (type === 'community') {
     bgClass = 'bg-surface border-primary border-dashed border-2';
+  } else if (type === 'pharmacy') {
+    bgClass = 'bg-green-500 border-white border-2';
   }
 
   return L.divIcon({
@@ -37,15 +40,15 @@ const userIcon = L.divIcon({
   iconAnchor: [12, 12],
 });
 
-export default function HospitalMapMarkers({ center, onSelect }: HospitalMapMarkersProps) {
+export default function HospitalMapMarkers({ center, onSelect, hospitals = [] }: HospitalMapMarkersProps) {
   return (
     <>
       <Marker position={center} icon={userIcon} />
-      {MOCK_HOSPITALS.map((hospital) => (
+      {hospitals.map((hospital) => (
         <Marker
           key={hospital.id}
           position={[hospital.lat, hospital.lng]}
-          icon={createIcon(hospital.type || 'Hospital')}
+          icon={createIcon(hospital.type || 'hospital')}
           eventHandlers={{ click: () => onSelect(hospital) }}
         />
       ))}

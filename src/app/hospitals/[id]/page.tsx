@@ -3,7 +3,6 @@
 import React, { use } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { MOCK_HOSPITALS } from '@/data/constants';
 import BottomNav from '@/components/BottomNav';
 import L from 'leaflet';
 import { Marker } from 'react-leaflet';
@@ -19,10 +18,24 @@ const hospitalPin = L.divIcon({
   iconAnchor: [10, 10],
 });
 
+// Fallback hospital data — this page will be enhanced with live lookup later
+const FALLBACK_HOSPITAL = {
+  id: '1',
+  name: 'Dr. Hedgewar Arogya Sansthan',
+  type: 'hospital' as const,
+  lat: 28.6380,
+  lng: 77.3100,
+  distance: '0.8 km',
+  address: 'Karkardooma, Institutional Area, Near District Court, Delhi 110032',
+  phone: '+91 11 2230 4200',
+  isVerified: true,
+  hasEmergency: true,
+};
+
 export default function HospitalDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
-  // Using static hospital data for now as per instructions (Dr. Hedgewar)
-  const hospital = MOCK_HOSPITALS[0]; 
+  // Using fallback hospital data — live lookup by ID will be added later
+  const hospital = FALLBACK_HOSPITAL;
   const center: [number, number] = [hospital.lat, hospital.lng];
 
   return (
