@@ -108,9 +108,32 @@ export function useLocationAqi(): UseLocationAqiReturn {
         // ignore
       }
 
-      setIsLocating(true);
-      const coords = await getCurrentPosition();
-      if (cancelled) return;
+      // 1. Check if user manually selected a city from search
+      let coords: { lat: number; lng: number } | null = null;
+      try {
+        const manual = localStorage.getItem('aerocost_manual_location');
+        if (manual) {
+          const parsed = JSON.parse(manual);
+          if (parsed.lat && parsed.lng) {
+            coords = { lat: parsed.lat, lng: parsed.lng };
+            latRef.current = parsed.lat;
+            lngRef.current = parsed.lng;
+          }
+        }
+      } catch {
+        // ignore
+      }
+
+      // 2. If no manual selection, try GPS
+      if (!coords) {
+        try {
+          coords = await getCurrentPosition();
+        } catch {
+          coords = DEFAULT_LOCATION;
+        }
+      }
+
+      if (cancelled || !coords) return;
 
       latRef.current = coords.lat;
       lngRef.current = coords.lng;

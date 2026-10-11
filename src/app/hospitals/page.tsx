@@ -4,12 +4,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import BottomNav from '@/components/BottomNav';
-import { fetchNearbyHospitals } from '@/lib/api-client';
-import { getCurrentPosition } from '@/lib/geo';
+import { fetchNearbyHospitalsMultiStream } from '@/lib/api-client';
+import { getCurrentPosition, DEFAULT_LOCATION } from '@/lib/geo';
 import type { Hospital } from '@/lib/types';
 
-const MapWrapper = dynamic(() => import('@/components/MapWrapper'), { ssr: false, loading: () => <div className="h-full w-full bg-surface-dim animate-pulse" /> });
-const HospitalMapMarkers = dynamic(() => import('@/components/HospitalMapMarkers'), { ssr: false });
+const MapWrapper = dynamic(() => import('@/components/MapWrapper'), {
+  ssr: false,
+  loading: () => <div className="h-full w-full bg-surface-dim animate-pulse" />,
+});
+const HospitalMapMarkers = dynamic(() => import('@/components/HospitalMapMarkers'), {
+  ssr: false,
+});
 
 type FilterKey = 'all' | 'hospital' | 'phc' | 'pharmacy' | 'community';
 
@@ -19,32 +24,66 @@ export default function HospitalsMapPage() {
   const [error, setError] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
-  const [center, setCenter] = useState<[number, number]>([28.6469, 77.3164]);
+  const [center, setCenter] = useState<[number, number]>([DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng]);
   const [locationName, setLocationName] = useState('your location');
+  const [effectiveRadius, setEffectiveRadius] = useState<number>(5);
+  const [sources, setSources] = useState<string[]>([]);
 
-  // Fetch hospitals from Overpass API
+  // Fetch hospitals using multi-stream pipeline
   const loadHospitals = useCallback(async () => {
     setIsLoading(true);
     setError(null);
+
+    let lat = DEFAULT_LOCATION.lat;
+    let lng = DEFAULT_LOCATION.lng;
+    let resolvedName = 'your location';
+
+    // 1. First check manual location selected from city search
     try {
-      const coords = await getCurrentPosition();
-      setCenter([coords.lat, coords.lng]);
-
-      const results = await fetchNearbyHospitals(coords.lat, coords.lng, 5000);
-      setHospitals(results);
-      if (results.length > 0) {
-        setSelectedHospital(results[0]);
-      }
-
-      // Try to get location name from localStorage
-      try {
+      const manual = localStorage.getItem('aerocost_manual_location');
+      if (manual) {
+        const parsed = JSON.parse(manual);
+        if (parsed.lat && parsed.lng) {
+          lat = parsed.lat;
+          lng = parsed.lng;
+          resolvedName = parsed.name || 'Selected City';
+        }
+      } else {
+        // 2. Check last cached location
         const stored = localStorage.getItem('aerocost_last_location');
         if (stored) {
           const parsed = JSON.parse(stored);
-          setLocationName(parsed.displayName || parsed.city || 'your location');
+          if (parsed.lat && parsed.lng) {
+            lat = parsed.lat;
+            lng = parsed.lng;
+            resolvedName = parsed.displayName || parsed.city || 'your area';
+          }
+        } else {
+          // 3. Try GPS geolocation
+          try {
+            const coords = await getCurrentPosition();
+            lat = coords.lat;
+            lng = coords.lng;
+          } catch {
+            // Geolocation fallback to default Delhi or last known
+          }
         }
-      } catch {
-        // ignore
+      }
+    } catch {
+      // ignore storage errors
+    }
+
+    setCenter([lat, lng]);
+    setLocationName(resolvedName);
+
+    try {
+      const streamResult = await fetchNearbyHospitalsMultiStream(lat, lng, 5000);
+      setHospitals(streamResult.hospitals);
+      setEffectiveRadius(streamResult.effectiveRadiusKm || 5);
+      setSources(streamResult.sourcesUsed || []);
+
+      if (streamResult.hospitals.length > 0) {
+        setSelectedHospital(streamResult.hospitals[0]);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load hospitals');
@@ -57,7 +96,7 @@ export default function HospitalsMapPage() {
     loadHospitals();
   }, [loadHospitals]);
 
-  // Compute filter counts from real data
+  // Compute filter counts from real multi-stream data
   const counts = {
     all: hospitals.length,
     hospital: hospitals.filter((h) => h.type === 'hospital').length,
@@ -111,12 +150,12 @@ export default function HospitalsMapPage() {
             ))}
           </div>
 
-          {/* Sub-badge */}
-          <div className="self-start inline-flex items-center gap-2 bg-surface/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-outline-variant/30 shadow-sm pointer-events-auto">
+          {/* Sub-badge with multi-stream telemetry info */}
+          <div className="self-start inline-flex items-center gap-2 bg-surface/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-outline-variant/30 shadow-md pointer-events-auto max-w-[95%]">
             {isLoading ? (
               <>
-                <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-                <span className="text-xs font-medium text-on-surface-variant">Searching nearby facilities...</span>
+                <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin shrink-0" />
+                <span className="text-xs font-medium text-on-surface-variant">Scanning OpenStreetMap &amp; Health Streams...</span>
               </>
             ) : error ? (
               <>
@@ -125,12 +164,17 @@ export default function HospitalsMapPage() {
                 <button onClick={loadHospitals} className="text-xs font-bold text-primary ml-1">Retry</button>
               </>
             ) : (
-              <>
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span className="text-xs font-medium text-on-surface-variant">
-                  {filteredHospitals.length} verified facilities within 5 km of {locationName}
+              <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0"></span>
+                <span className="text-xs font-medium text-on-surface-variant truncate">
+                  <strong className="text-primary font-semibold">{filteredHospitals.length} verified facilities</strong> within {effectiveRadius.toFixed(0)} km of {locationName}
                 </span>
-              </>
+                {sources.length > 0 && (
+                  <span className="hidden sm:inline-block text-[10px] bg-slate/10 text-slate px-2 py-0.5 rounded-full font-medium shrink-0">
+                    {sources.slice(0, 2).join(' + ')}
+                  </span>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -143,7 +187,7 @@ export default function HospitalsMapPage() {
                 <div>
                   <h3 className="text-title-lg font-bold text-on-surface mb-1">{selectedHospital.name}</h3>
                   <p className="text-body-sm text-on-surface-variant">
-                    {selectedHospital.type || 'Hospital'} • <span className="font-[var(--font-space-grotesk)] font-medium">{selectedHospital.distance}</span> away
+                    {selectedHospital.type ? selectedHospital.type.toUpperCase() : 'HOSPITAL'} • <span className="font-[var(--font-space-grotesk)] font-medium text-primary">{selectedHospital.distance}</span> away
                   </p>
                   {selectedHospital.address && (
                     <p className="text-body-sm text-on-surface-variant mt-0.5 line-clamp-1">{selectedHospital.address}</p>
@@ -157,19 +201,19 @@ export default function HospitalsMapPage() {
               {/* Badges */}
               <div className="flex flex-wrap gap-2">
                 {selectedHospital.hasEmergency && (
-                  <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
-                    <span className="material-symbols-outlined text-[14px]">local_hospital</span>
-                    Emergency
+                  <span className="inline-flex items-center gap-1 bg-red-50 text-red-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
+                    <span className="material-symbols-outlined text-[14px]">emergency</span>
+                    24/7 Emergency
                   </span>
                 )}
-                {selectedHospital.specialties?.map((s: string) => (
+                {selectedHospital.specialties?.slice(0, 3).map((s: string) => (
                   <span key={s} className="inline-flex items-center gap-1 bg-teal-50 text-teal-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
                     {s}
                   </span>
                 ))}
-                <span className="inline-flex items-center gap-1 bg-slate-50 text-slate-600 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
-                  <span className="material-symbols-outlined text-[14px]">map</span>
-                  OpenStreetMap
+                <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
+                  <span className="material-symbols-outlined text-[13px]">verified</span>
+                  Verified Node
                 </span>
               </div>
 
@@ -178,7 +222,7 @@ export default function HospitalsMapPage() {
                   href={`https://www.google.com/maps/dir/?api=1&destination=${selectedHospital.lat},${selectedHospital.lng}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 bg-primary text-on-primary py-3 rounded-full text-label-lg font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
+                  className="flex-1 bg-primary text-on-primary py-3 rounded-full text-label-lg font-bold flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-95 transition-all shadow-md"
                 >
                   <span className="material-symbols-outlined text-[18px]">directions</span>
                   Get Directions
@@ -186,7 +230,7 @@ export default function HospitalsMapPage() {
                 {selectedHospital.phone && (
                   <a
                     href={`tel:${selectedHospital.phone}`}
-                    className="w-12 h-12 shrink-0 rounded-full border border-outline flex items-center justify-center text-primary hover:bg-surface-variant transition-colors"
+                    className="w-12 h-12 shrink-0 rounded-full border border-outline flex items-center justify-center text-primary hover:bg-surface-variant active:scale-95 transition-all"
                   >
                     <span className="material-symbols-outlined">call</span>
                   </a>
@@ -197,7 +241,7 @@ export default function HospitalsMapPage() {
         )}
 
         {/* Floating Action Button */}
-        <Link href="/hospitals/add" className="absolute bottom-24 right-4 z-[10] pointer-events-auto bg-primary-container/90 backdrop-blur-md text-on-primary-container px-4 py-3 rounded-full shadow-lg border border-primary/20 flex items-center gap-2 hover:bg-primary-container transition-all">
+        <Link href="/hospitals/add" className="absolute bottom-24 right-4 z-[10] pointer-events-auto bg-primary-container text-on-primary-container px-4 py-3 rounded-full shadow-lg border border-primary/20 flex items-center gap-2 hover:bg-primary-container/90 active:scale-95 transition-all">
           <span className="material-symbols-outlined text-[20px]">add</span>
           <span className="text-label-lg font-bold pr-1">Add Clinic</span>
         </Link>

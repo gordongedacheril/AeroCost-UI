@@ -71,10 +71,10 @@ export default function Search() {
   };
 
   // Handle city/station selection
-  const handleSelectStation = (lat: number, lng: number) => {
+  const handleSelectStation = (lat: number, lng: number, name?: string) => {
     localStorage.setItem(
       'aerocost_manual_location',
-      JSON.stringify({ lat, lng })
+      JSON.stringify({ lat, lng, name })
     );
     router.push('/');
   };
@@ -159,7 +159,7 @@ export default function Search() {
                   return (
                     <button
                       key={result.uid}
-                      onClick={() => handleSelectStation(result.station.lat, result.station.lng)}
+                      onClick={() => handleSelectStation(result.station.lat, result.station.lng, result.name)}
                       className="bg-card-white rounded-xl p-4 shadow-card flex items-center justify-between active:scale-[0.99] transition-transform text-left"
                     >
                       <div className="flex flex-col gap-1 flex-1 min-w-0">
@@ -217,7 +217,7 @@ export default function Search() {
                 return (
                   <button
                     key={idx}
-                    onClick={() => handleSelectStation(city.lat, city.lng)}
+                    onClick={() => handleSelectStation(city.lat, city.lng, `${city.name}, ${city.state}`)}
                     className="bg-card-white rounded-xl p-4 shadow-card flex items-center justify-between active:scale-[0.99] transition-transform text-left"
                   >
                     <div className="flex flex-col gap-1">
