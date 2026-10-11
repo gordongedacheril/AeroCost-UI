@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import BottomNav from '@/components/BottomNav';
@@ -10,13 +10,14 @@ import type { Hospital } from '@/lib/types';
 
 const MapWrapper = dynamic(() => import('@/components/MapWrapper'), {
   ssr: false,
-  loading: () => <div className="h-full w-full bg-surface-dim animate-pulse" />,
+  loading: () => <div className="h-full w-full bg-slate-100 animate-pulse flex items-center justify-center text-slate-400">Loading Map...</div>,
 });
 const HospitalMapMarkers = dynamic(() => import('@/components/HospitalMapMarkers'), {
   ssr: false,
 });
 
 type FilterKey = 'all' | 'hospital' | 'phc' | 'pharmacy' | 'community';
+type ViewMode = 'map' | 'list';
 
 export default function HospitalsMapPage() {
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
@@ -24,10 +25,12 @@ export default function HospitalsMapPage() {
   const [error, setError] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [center, setCenter] = useState<[number, number]>([DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng]);
   const [locationName, setLocationName] = useState('your location');
   const [effectiveRadius, setEffectiveRadius] = useState<number>(5);
-  const [sources, setSources] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<ViewMode>('map');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Fetch hospitals using multi-stream pipeline
   const loadHospitals = useCallback(async () => {
@@ -36,9 +39,9 @@ export default function HospitalsMapPage() {
 
     let lat = DEFAULT_LOCATION.lat;
     let lng = DEFAULT_LOCATION.lng;
-    let resolvedName = 'your location';
+    let resolvedName = 'your area';
 
-    // 1. First check manual location selected from city search
+    // 1. Check manual location selected from city search
     try {
       const manual = localStorage.getItem('aerocost_manual_location');
       if (manual) {
@@ -65,12 +68,12 @@ export default function HospitalsMapPage() {
             lat = coords.lat;
             lng = coords.lng;
           } catch {
-            // Geolocation fallback to default Delhi or last known
+            // Geolocation fallback
           }
         }
       }
     } catch {
-      // ignore storage errors
+      // ignore
     }
 
     setCenter([lat, lng]);
@@ -80,10 +83,10 @@ export default function HospitalsMapPage() {
       const streamResult = await fetchNearbyHospitalsMultiStream(lat, lng, 5000);
       setHospitals(streamResult.hospitals);
       setEffectiveRadius(streamResult.effectiveRadiusKm || 5);
-      setSources(streamResult.sourcesUsed || []);
 
       if (streamResult.hospitals.length > 0) {
         setSelectedHospital(streamResult.hospitals[0]);
+        setSelectedIndex(0);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load hospitals');
@@ -96,7 +99,7 @@ export default function HospitalsMapPage() {
     loadHospitals();
   }, [loadHospitals]);
 
-  // Compute filter counts from real multi-stream data
+  // Compute filter counts
   const counts = {
     all: hospitals.length,
     hospital: hospitals.filter((h) => h.type === 'hospital').length,
@@ -116,136 +119,376 @@ export default function HospitalsMapPage() {
   ];
 
   // Filter hospitals for display
-  const filteredHospitals = activeFilter === 'all'
-    ? hospitals
-    : hospitals.filter((h) => {
-        if (activeFilter === 'phc') return h.type === 'phc' || h.type === 'clinic';
-        return h.type === activeFilter;
-      });
+  const filteredHospitals = useMemo(() => {
+    let list = activeFilter === 'all'
+      ? hospitals
+      : hospitals.filter((h) => {
+          if (activeFilter === 'phc') return h.type === 'phc' || h.type === 'clinic';
+          return h.type === activeFilter;
+        });
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter(
+        (h) =>
+          h.name.toLowerCase().includes(q) ||
+          h.address?.toLowerCase().includes(q) ||
+          h.specialties?.some((s) => s.toLowerCase().includes(q))
+      );
+    }
+
+    return list;
+  }, [hospitals, activeFilter, searchQuery]);
+
+  const handleSelectHospital = (hospital: Hospital) => {
+    setSelectedHospital(hospital);
+    const idx = filteredHospitals.findIndex((h) => h.id === hospital.id);
+    if (idx !== -1) setSelectedIndex(idx);
+  };
+
+  const handleNextHospital = () => {
+    if (filteredHospitals.length === 0) return;
+    const nextIdx = (selectedIndex + 1) % filteredHospitals.length;
+    setSelectedIndex(nextIdx);
+    setSelectedHospital(filteredHospitals[nextIdx]);
+  };
+
+  const handlePrevHospital = () => {
+    if (filteredHospitals.length === 0) return;
+    const prevIdx = (selectedIndex - 1 + filteredHospitals.length) % filteredHospitals.length;
+    setSelectedIndex(prevIdx);
+    setSelectedHospital(filteredHospitals[prevIdx]);
+  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface font-[var(--font-inter)] relative">
-      {/* Map Container */}
-      <div className="flex-1 relative" style={{ height: 'calc(100vh - 4rem)' }}>
-        <MapWrapper center={center} zoom={14}>
-          <HospitalMapMarkers center={center} onSelect={setSelectedHospital} hospitals={filteredHospitals} />
-        </MapWrapper>
+    <div className="flex flex-col min-h-screen bg-slate-50 font-[var(--font-inter)] relative">
+      {/* ── Top Header Bar ── */}
+      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 py-3 shadow-xs">
+        <div className="max-w-6xl mx-auto flex flex-col gap-2.5">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h1 className="text-lg md:text-xl font-bold text-ink flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-2xl">local_hospital</span>
+                Nearby Health Facilities
+              </h1>
+              <p className="text-xs text-slate truncate max-w-xs md:max-w-md">
+                Showing verified emergency nodes around {locationName}
+              </p>
+            </div>
 
-        {/* Floating Top UI */}
-        <div className="absolute top-0 left-0 right-0 z-[10] pointer-events-none p-4 flex flex-col gap-3">
-          {/* Filters Row */}
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide pointer-events-auto">
-            {filters.map((f) => (
+            {/* View Mode Toggle Button */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shrink-0">
               <button
-                key={f.key}
-                onClick={() => setActiveFilter(f.key)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium backdrop-blur-md transition-all ${
-                  activeFilter === f.key 
-                    ? 'bg-primary/90 text-on-primary shadow-lg border border-primary/20' 
-                    : 'bg-surface/70 text-on-surface border border-outline-variant/50 hover:bg-surface/90'
+                onClick={() => setViewMode('map')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  viewMode === 'map'
+                    ? 'bg-white text-primary shadow-xs'
+                    : 'text-slate hover:text-ink'
                 }`}
               >
-                {f.label}
+                <span className="material-symbols-outlined text-[16px]">map</span>
+                Map
               </button>
-            ))}
-          </div>
-
-          {/* Sub-badge with multi-stream telemetry info */}
-          <div className="self-start inline-flex items-center gap-2 bg-surface/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-outline-variant/30 shadow-md pointer-events-auto max-w-[95%]">
-            {isLoading ? (
-              <>
-                <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin shrink-0" />
-                <span className="text-xs font-medium text-on-surface-variant">Scanning OpenStreetMap &amp; Health Streams...</span>
-              </>
-            ) : error ? (
-              <>
-                <span className="material-symbols-outlined text-red-500 text-[14px]">error</span>
-                <span className="text-xs font-medium text-red-600">{error}</span>
-                <button onClick={loadHospitals} className="text-xs font-bold text-primary ml-1">Retry</button>
-              </>
-            ) : (
-              <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0"></span>
-                <span className="text-xs font-medium text-on-surface-variant truncate">
-                  <strong className="text-primary font-semibold">{filteredHospitals.length} verified facilities</strong> within {effectiveRadius.toFixed(0)} km of {locationName}
-                </span>
-                {sources.length > 0 && (
-                  <span className="hidden sm:inline-block text-[10px] bg-slate/10 text-slate px-2 py-0.5 rounded-full font-medium shrink-0">
-                    {sources.slice(0, 2).join(' + ')}
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Selected Facility Bottom Card */}
-        {selectedHospital && (
-          <div className="absolute bottom-20 left-4 right-4 z-[10] pointer-events-auto transition-transform duration-300">
-            <div className="bg-surface rounded-[24px] p-5 shadow-xl border border-outline-variant/20 flex flex-col gap-4">
-              <div className="flex justify-between items-start gap-4">
-                <div>
-                  <h3 className="text-title-lg font-bold text-on-surface mb-1">{selectedHospital.name}</h3>
-                  <p className="text-body-sm text-on-surface-variant">
-                    {selectedHospital.type ? selectedHospital.type.toUpperCase() : 'HOSPITAL'} • <span className="font-[var(--font-space-grotesk)] font-medium text-primary">{selectedHospital.distance}</span> away
-                  </p>
-                  {selectedHospital.address && (
-                    <p className="text-body-sm text-on-surface-variant mt-0.5 line-clamp-1">{selectedHospital.address}</p>
-                  )}
-                </div>
-                <Link href={`/hospitals/${selectedHospital.id}`} className="shrink-0 w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-dim transition-colors">
-                  <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
-                </Link>
-              </div>
-
-              {/* Badges */}
-              <div className="flex flex-wrap gap-2">
-                {selectedHospital.hasEmergency && (
-                  <span className="inline-flex items-center gap-1 bg-red-50 text-red-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
-                    <span className="material-symbols-outlined text-[14px]">emergency</span>
-                    24/7 Emergency
-                  </span>
-                )}
-                {selectedHospital.specialties?.slice(0, 3).map((s: string) => (
-                  <span key={s} className="inline-flex items-center gap-1 bg-teal-50 text-teal-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
-                    {s}
-                  </span>
-                ))}
-                <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
-                  <span className="material-symbols-outlined text-[13px]">verified</span>
-                  Verified Node
-                </span>
-              </div>
-
-              <div className="flex gap-3 mt-1">
-                <a
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${selectedHospital.lat},${selectedHospital.lng}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-primary text-on-primary py-3 rounded-full text-label-lg font-bold flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-95 transition-all shadow-md"
-                >
-                  <span className="material-symbols-outlined text-[18px]">directions</span>
-                  Get Directions
-                </a>
-                {selectedHospital.phone && (
-                  <a
-                    href={`tel:${selectedHospital.phone}`}
-                    className="w-12 h-12 shrink-0 rounded-full border border-outline flex items-center justify-center text-primary hover:bg-surface-variant active:scale-95 transition-all"
-                  >
-                    <span className="material-symbols-outlined">call</span>
-                  </a>
-                )}
-              </div>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  viewMode === 'list'
+                    ? 'bg-white text-primary shadow-xs'
+                    : 'text-slate hover:text-ink'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[16px]">list</span>
+                List ({filteredHospitals.length})
+              </button>
             </div>
           </div>
-        )}
 
-        {/* Floating Action Button */}
-        <Link href="/hospitals/add" className="absolute bottom-24 right-4 z-[10] pointer-events-auto bg-primary-container text-on-primary-container px-4 py-3 rounded-full shadow-lg border border-primary/20 flex items-center gap-2 hover:bg-primary-container/90 active:scale-95 transition-all">
-          <span className="material-symbols-outlined text-[20px]">add</span>
-          <span className="text-label-lg font-bold pr-1">Add Clinic</span>
-        </Link>
-      </div>
+          {/* Sub-badge: Clean verified count without source names */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full text-xs text-emerald-800 font-medium">
+              {isLoading ? (
+                <>
+                  <div className="w-3.5 h-3.5 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+                  <span>Scanning local facilities...</span>
+                </>
+              ) : (
+                <>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>
+                    <strong>{filteredHospitals.length} verified facilities</strong> within {effectiveRadius.toFixed(0)} km of {locationName}
+                  </span>
+                </>
+              )}
+            </div>
+
+            {/* Filter chips */}
+            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide py-0.5">
+              {filters.map((f) => (
+                <button
+                  key={f.key}
+                  onClick={() => setActiveFilter(f.key)}
+                  className={`whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                    activeFilter === f.key
+                      ? 'bg-primary text-white shadow-xs font-semibold'
+                      : 'bg-white text-slate border border-slate-200 hover:bg-slate-50'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ── VIEW 1: MAP VIEW ── */}
+      {viewMode === 'map' && (
+        <div className="flex-1 relative w-full" style={{ height: 'calc(100vh - 128px)', minHeight: '500px' }}>
+          {/* Leaflet Map with automatic resize and marker binding */}
+          <MapWrapper center={center} zoom={13} className="h-full w-full">
+            <HospitalMapMarkers
+              center={center}
+              onSelect={handleSelectHospital}
+              hospitals={filteredHospitals}
+            />
+          </MapWrapper>
+
+          {/* Map Floating Actions Top Left */}
+          <div className="absolute top-4 left-4 z-[10] flex items-center gap-2 pointer-events-auto">
+            <button
+              onClick={() => setViewMode('list')}
+              className="bg-white/95 backdrop-blur-md text-ink text-xs font-bold px-3.5 py-2 rounded-full shadow-md border border-slate-200 flex items-center gap-1.5 hover:bg-white active:scale-95 transition-all"
+            >
+              <span className="material-symbols-outlined text-[16px] text-primary">format_list_bulleted</span>
+              Browse All ({filteredHospitals.length})
+            </button>
+          </div>
+
+          {/* Selected Facility Interactive Card Slider (Bottom of Map) */}
+          {selectedHospital && (
+            <div className="absolute bottom-20 left-3 right-3 md:left-6 md:right-auto md:w-[480px] z-[10] pointer-events-auto transition-transform duration-300">
+              <div className="bg-white/98 backdrop-blur-xl rounded-2xl p-4 md:p-5 shadow-2xl border border-slate-200/80 flex flex-col gap-3">
+                {/* Header & Navigation */}
+                <div className="flex justify-between items-start gap-2">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
+                        {selectedHospital.type || 'HOSPITAL'}
+                      </span>
+                      <span className="text-xs font-bold text-slate">
+                        {selectedHospital.distance} away
+                      </span>
+                      {filteredHospitals.length > 1 && (
+                        <span className="text-[11px] text-slate/70 ml-auto font-[var(--font-space-grotesk)]">
+                          {selectedIndex + 1} of {filteredHospitals.length}
+                        </span>
+                      )}
+                    </div>
+                    <h2 className="text-base md:text-lg font-bold text-ink leading-snug truncate">
+                      {selectedHospital.name}
+                    </h2>
+                    {selectedHospital.address && (
+                      <p className="text-xs text-slate mt-0.5 line-clamp-1">
+                        {selectedHospital.address}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-1 shrink-0">
+                    {/* Carousel Prev / Next controls */}
+                    {filteredHospitals.length > 1 && (
+                      <div className="flex items-center gap-1 mr-1">
+                        <button
+                          onClick={handlePrevHospital}
+                          aria-label="Previous hospital"
+                          className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate hover:bg-slate-200 active:scale-95 transition-all"
+                        >
+                          <span className="material-symbols-outlined text-[18px]">chevron_left</span>
+                        </button>
+                        <button
+                          onClick={handleNextHospital}
+                          aria-label="Next hospital"
+                          className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate hover:bg-slate-200 active:scale-95 transition-all"
+                        >
+                          <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+                        </button>
+                      </div>
+                    )}
+                    <Link
+                      href={`/hospitals/${selectedHospital.id}`}
+                      className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors"
+                      title="View details"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Badges */}
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedHospital.hasEmergency && (
+                    <span className="inline-flex items-center gap-1 bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide">
+                      <span className="material-symbols-outlined text-[12px]">emergency</span>
+                      24/7 Emergency
+                    </span>
+                  )}
+                  {selectedHospital.specialties?.slice(0, 3).map((s: string) => (
+                    <span key={s} className="inline-flex items-center gap-1 bg-teal-50 text-teal-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide">
+                      {s}
+                    </span>
+                  ))}
+                  <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide">
+                    <span className="material-symbols-outlined text-[12px]">verified</span>
+                    Verified Node
+                  </span>
+                </div>
+
+                {/* Primary Action Buttons */}
+                <div className="flex gap-2 pt-1">
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${selectedHospital.lat},${selectedHospital.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-primary text-white py-2.5 px-4 rounded-xl text-xs md:text-sm font-bold flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-95 transition-all shadow-sm"
+                  >
+                    <span className="material-symbols-outlined text-[16px]">directions</span>
+                    Get Directions
+                  </a>
+                  {selectedHospital.phone && (
+                    <a
+                      href={`tel:${selectedHospital.phone}`}
+                      className="w-10 h-10 shrink-0 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-primary hover:bg-slate-200 active:scale-95 transition-all"
+                      title={`Call ${selectedHospital.phone}`}
+                    >
+                      <span className="material-symbols-outlined text-[18px]">call</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Add Clinic FAB */}
+          <Link
+            href="/hospitals/add"
+            className="absolute bottom-24 right-4 z-[10] pointer-events-auto bg-primary text-white px-4 py-2.5 rounded-full shadow-lg border border-white/20 flex items-center gap-2 hover:bg-primary/90 active:scale-95 transition-all text-xs font-bold"
+          >
+            <span className="material-symbols-outlined text-[18px]">add</span>
+            Add Clinic
+          </Link>
+        </div>
+      )}
+
+      {/* ── VIEW 2: FULL RESPONSIVE LIST VIEW ── */}
+      {viewMode === 'list' && (
+        <div className="flex-1 max-w-6xl w-full mx-auto p-4 pb-28">
+          {/* Search bar inside list */}
+          <div className="relative mb-4">
+            <span className="material-symbols-outlined absolute left-3.5 top-3 text-slate">search</span>
+            <input
+              type="text"
+              placeholder="Search by facility name, address, or specialty..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-ink placeholder:text-slate focus:outline-none focus:ring-2 focus:ring-primary shadow-2xs"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-3 text-slate hover:text-ink text-xs"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          {/* Hospital Cards Grid */}
+          {filteredHospitals.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center my-6">
+              <span className="material-symbols-outlined text-4xl text-slate mb-2">local_hospital</span>
+              <h3 className="text-base font-bold text-ink">No facilities match your filter</h3>
+              <p className="text-xs text-slate mt-1">Try switching filter tabs or clearing your search query.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredHospitals.map((hospital, index) => (
+                <div
+                  key={hospital.id}
+                  className="bg-white rounded-2xl p-4 md:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    {/* Header: Distance & Type */}
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 text-primary">
+                        {hospital.type || 'HOSPITAL'}
+                      </span>
+                      <span className="text-xs font-bold text-primary font-[var(--font-space-grotesk)]">
+                        {hospital.distance} away
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-base font-bold text-ink group-hover:text-primary transition-colors line-clamp-1 mb-1">
+                      {hospital.name}
+                    </h3>
+
+                    {/* Address */}
+                    {hospital.address && (
+                      <p className="text-xs text-slate line-clamp-2 mb-3">
+                        {hospital.address}
+                      </p>
+                    )}
+
+                    {/* Badges */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {hospital.hasEmergency && (
+                        <span className="inline-flex items-center gap-1 bg-red-50 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold">
+                          <span className="material-symbols-outlined text-[12px]">emergency</span>
+                          24/7 Emergency
+                        </span>
+                      )}
+                      {hospital.specialties?.slice(0, 2).map((s: string) => (
+                        <span key={s} className="bg-teal-50 text-teal-700 px-2 py-0.5 rounded text-[10px] font-medium">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
+                    <a
+                      href={`https://www.google.com/maps/dir/?api=1&destination=${hospital.lat},${hospital.lng}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-primary text-white py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-primary/90 transition-all shadow-2xs"
+                    >
+                      <span className="material-symbols-outlined text-[15px]">directions</span>
+                      Directions
+                    </a>
+                    {hospital.phone && (
+                      <a
+                        href={`tel:${hospital.phone}`}
+                        className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-primary hover:bg-slate-200 transition-all shrink-0"
+                        title={hospital.phone}
+                      >
+                        <span className="material-symbols-outlined text-[16px]">call</span>
+                      </a>
+                    )}
+                    <Link
+                      href={`/hospitals/${hospital.id}`}
+                      className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate hover:text-ink hover:bg-slate-200 transition-all shrink-0"
+                      title="View full facility sheet"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <BottomNav />
     </div>

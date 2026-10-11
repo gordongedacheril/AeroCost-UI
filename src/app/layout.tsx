@@ -24,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${spaceGrotesk.variable} h-full`}
     >
       <head>
@@ -37,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin=""
         />
       </head>
-      <body className="min-h-full flex flex-col bg-sky-paper text-ink antialiased font-[var(--font-inter)]">
+      <body suppressHydrationWarning className="min-h-full flex flex-col bg-sky-paper text-ink antialiased font-[var(--font-inter)]">
         {children}
       </body>
     </html>

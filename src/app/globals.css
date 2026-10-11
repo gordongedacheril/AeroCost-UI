@@ -187,5 +187,16 @@ body {
 /* ── Leaflet fixes ── */
 .leaflet-container {
   z-index: 0;
+  width: 100% !important;
+  height: 100% !important;
   font-family: var(--font-body) !important;
+  background-color: #f1f5f9 !important;
+}
+
+.leaflet-pane {
+  z-index: 10 !important;
+}
+
+.leaflet-top, .leaflet-bottom {
+  z-index: 20 !important;
 }
