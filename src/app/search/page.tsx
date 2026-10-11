@@ -2,7 +2,7 @@
 
 import BottomNav from '@/components/BottomNav';
 import { POPULAR_CITIES, getAqiBand } from '@/data/constants';
-import { searchAqi } from '@/lib/api-client';
+import { searchCities } from '@/lib/api-client';
 import { getCurrentPosition } from '@/lib/geo';
 import type { AqiSearchResult } from '@/lib/types';
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -16,7 +16,6 @@ export default function Search() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const router = useRouter();
 
-  // Debounced live search via WAQI
   const performSearch = useCallback(async (q: string) => {
     if (!q.trim()) {
       setLiveResults([]);
@@ -24,10 +23,17 @@ export default function Search() {
     }
     setIsSearching(true);
     try {
-      const data = await searchAqi(q);
-      setLiveResults(data.results);
+      const data = await searchCities(q);
+      // Map Open-Meteo format to what the UI expects
+      const mapped = data.map((d: any) => ({
+        uid: d.id,
+        aqi: null, // Open-meteo geo doesn't have live AQI, we fetch on select
+        time: '',
+        name: `${d.name}${d.admin1 ? ', ' + d.admin1 : ''}`,
+        station: { lat: d.latitude, lng: d.longitude }
+      }));
+      setLiveResults(mapped);
     } catch {
-      // Silently fall back to local filter
       setLiveResults([]);
     } finally {
       setIsSearching(false);

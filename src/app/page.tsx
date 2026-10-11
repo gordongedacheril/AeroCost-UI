@@ -156,7 +156,7 @@ export default function HomePage() {
             <div className="relative pt-2 pb-1">
               <div className="absolute left-0 right-0 top-[46px] border-b border-dashed border-slate/25 pointer-events-none z-0" />
               <div className={`grid gap-2 relative z-10`} style={{ gridTemplateColumns: `repeat(${Math.min(forecast.length || 7, 7)}, 1fr)` }}>
-                {(forecast.length > 0 ? forecast : [{ time: '--', aqi: 0 }]).slice(0, 7).map((item) => {
+                {(forecast.length > 0 ? forecast : [{ time: '--', aqi: 0, isNow: false }]).slice(0, 7).map((item) => {
                   const b = getAqiBand(item.aqi);
                   const height = `${Math.min((item.aqi / 400) * 100, 100)}%`;
                   return (

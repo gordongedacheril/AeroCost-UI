@@ -1,19 +1,34 @@
-// Shared TypeScript interfaces for API responses
+export interface AqiSearchResult {
+  uid: number;
+  aqi: string | number | null;
+  time: string;
+  name: string;
+  station: {
+    lat: number;
+    lng: number;
+  };
+}
 
-// ─── AQI ────────────────────────────────────────────────────────────────────
+export interface LocationState {
+  lat: number;
+  lng: number;
+  city: string;
+  state: string;
+  displayName: string;
+}
 
 export interface Pollutant {
   name: string;
   value: number;
   unit: string;
-  status: string;
-  statusColor: string;
+  status?: string;
+  statusColor?: string;
 }
 
 export interface ForecastItem {
   time: string;
   aqi: number;
-  isNow?: boolean;
+  isNow: boolean;
 }
 
 export interface AqiResponse {
@@ -21,48 +36,11 @@ export interface AqiResponse {
   dominantPollutant: string;
   dominantPollutantValue: number;
   dominantPollutantUnit: string;
-  station: {
-    name: string;
-    url: string;
-  };
-  time: {
-    iso: string;
-    /** Minutes since last update */
-    minutesAgo: number;
-  };
+  station: { name: string; url: string };
+  time: { minutesAgo: number };
   pollutants: Pollutant[];
   forecast: ForecastItem[];
-  attribution: { name: string; url: string }[];
 }
-
-// ─── AQI Search ─────────────────────────────────────────────────────────────
-
-export interface AqiSearchResult {
-  uid: number;
-  name: string;
-  aqi: string | number; // WAQI sometimes returns "-" for unknown
-  station: {
-    lat: number;
-    lng: number;
-  };
-  time: string;
-}
-
-export interface AqiSearchResponse {
-  results: AqiSearchResult[];
-}
-
-// ─── Geocode ────────────────────────────────────────────────────────────────
-
-export interface GeocodeResponse {
-  city: string;
-  state: string;
-  district: string;
-  displayName: string;
-  country: string;
-}
-
-// ─── Hospitals ──────────────────────────────────────────────────────────────
 
 export interface Hospital {
   id: string;
@@ -71,21 +49,9 @@ export interface Hospital {
   lat: number;
   lng: number;
   distance: string;
-  distanceKm: number;
   address: string;
   phone?: string;
   isVerified: boolean;
   hasEmergency: boolean;
   specialties?: string[];
-  source: 'osm' | 'government' | 'community';
-}
-
-// ─── Location State ─────────────────────────────────────────────────────────
-
-export interface LocationState {
-  lat: number;
-  lng: number;
-  city: string;
-  state: string;
-  displayName: string;
 }

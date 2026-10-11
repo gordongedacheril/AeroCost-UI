@@ -162,7 +162,7 @@ export default function HospitalsMapPage() {
                     Emergency
                   </span>
                 )}
-                {selectedHospital.specialties?.map((s) => (
+                {selectedHospital.specialties?.map((s: string) => (
                   <span key={s} className="inline-flex items-center gap-1 bg-teal-50 text-teal-700 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide">
                     {s}
                   </span>
